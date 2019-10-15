@@ -1,0 +1,25 @@
+{
+  "name": "toweran",
+  "version": "0.0.1",
+  "description": "pure Javascript backend framework (nodejs)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shov/toweran.git"
+  },
+  "keywords": [
+    "framework",
+    "boilerplate",
+    "nodejd",
+    "javascript"
+  ],
+  "author": "Alexandr Shevchenko, shov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shov/toweran/issues"
+  },
+  "homepage": "https://github.com/shov/toweran#readme"
+}
