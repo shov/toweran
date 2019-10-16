@@ -18,8 +18,15 @@
   ],
   "author": "Alexandr Shevchenko, shov",
   "license": "MIT",
+  "bin": {
+    "toweran": "scripts/toweran.js"
+  },
   "bugs": {
     "url": "https://github.com/shov/toweran/issues"
   },
-  "homepage": "https://github.com/shov/toweran#readme"
+  "homepage": "https://github.com/shov/toweran#readme",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "glob": "^7.1.4"
+  }
 }
