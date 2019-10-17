@@ -1,6 +1,6 @@
 {
   "name": "toweran",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "pure Javascript backend framework (nodejs)",
   "main": "index.js",
   "scripts": {
