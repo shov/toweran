@@ -1,7 +1,7 @@
 {
   "name": "toweran",
   "version": "0.0.2",
-  "description": "pure Javascript backend framework (nodejs)",
+  "description": "pure Javascript OO backend framework (nodejs)",
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand"
@@ -26,7 +26,18 @@
   },
   "homepage": "https://github.com/shov/toweran#readme",
   "dependencies": {
+    "check-types": "^10.1.1",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4"
+  },
+  "jest": {
+    "testRegex": "/tests/.*Test.js$",
+    "rootDir": "."
+  },
+  "engines": {
+    "node": ">=11.7.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
   }
 }
