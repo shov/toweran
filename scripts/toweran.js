@@ -59,7 +59,7 @@ try {
       fs.copySync(file, `${projectDir}/${fileName}`)
     })
 
-    fs.copySync(`${moduleDir}/boilerplate/.gitignore.content`, `${projectDir}/.gitignore`)
+    fs.copySync(`${moduleDir}/boilerplate/.gitignore`, `${projectDir}/.gitignore`)
 
     const gitKeepExpression = new RegExp(`${projectDir}\/(${targetDirs.join('|')})\/(.*\/)?\.gitkeep$`, 'i')
 

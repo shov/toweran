@@ -24,3 +24,18 @@ toweran.InvalidArgumentException = require(FRAMEWORK_PATH + '/lib/exceptions/Inv
  * @type {Must}
  */
 toweran.must = new (require(FRAMEWORK_PATH + '/lib/Must'))
+
+/**
+ * Contracts: Interfaces & Basic classes
+ */
+toweran.LoggerInterface = require(FRAMEWORK_PATH + '/lib/contracts/LoggerInterface')
+toweran.ContainerRegistrationInterface = require(FRAMEWORK_PATH + '/lib/contracts/ContainerRegistrationInterface')
+toweran.ContainerInterface = require(FRAMEWORK_PATH + '/lib/contracts/ContainerInterface')
+
+/**
+ * Core constructors
+ */
+toweran.Logger = require(FRAMEWORK_PATH + '/lib/Logger')
+toweran.ContainerRegistration = require(FRAMEWORK_PATH + '/lib/ContainerRegistration')
+toweran.Container = require(FRAMEWORK_PATH + '/lib/Container')
+toweran.App = require(FRAMEWORK_PATH + '/lib/App')
