@@ -59,7 +59,7 @@ try {
       fs.copySync(file, `${projectDir}/${fileName}`)
     })
 
-    fs.copySync(`${moduleDir}/boilerplate/.gitignore`, `${projectDir}/.gitignore`)
+    fs.copySync(`${moduleDir}/boilerplate/.gitignore.content`, `${projectDir}/.gitignore`)
 
     const gitKeepExpression = new RegExp(`${projectDir}\/(${targetDirs.join('|')})\/(.*\/)?\.gitkeep$`, 'i')
 
@@ -68,6 +68,12 @@ try {
         fs.removeSync(file)
       }
     })
+
+    let  bootstrapFileContent = fs.readFileSync(`${projectDir}/bootstrap.js`, 'utf-8')
+    bootstrapFileContent = bootstrapFileContent.replace(`require('../toweran')`, `require('toweran')`)
+    fs.writeFileSync(`${projectDir}/bootstrap.js`, bootstrapFileContent, 'utf8')
+
+    console.log(`🏰 Done`)
   })()
 
 } catch (e) {

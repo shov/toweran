@@ -1,0 +1,10 @@
+.idea
+.vscode
+/nodedock
+/laradock
+/logs
+/certs
+/node_modules
+/test/data
+.env
+.DS_Store
