@@ -1,3 +1,7 @@
+branches:
+  only:
+    - master
+    - release/.*
 language: node_js
 node_js:
   - 10.7.0
