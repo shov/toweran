@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - 10.7.0
+cache:
+  npm: false
+install:
+  - npm ci
+script:
+  - scripts/travis_test.sh

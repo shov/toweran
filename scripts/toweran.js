@@ -15,12 +15,18 @@ try {
 
   //Process arguments
   const [, , ...args] = process.argv
+  const options = {}
 
   switch (true) {
     case !args[0]:
       throw new Error(`unknown action, run \n$ npx toweran --help\nto get more information`)
 
     case 'create-project' === args[0]:
+
+      if ('--travis-fixtures' === args[2]) {
+        options.travisFixtures = true
+      }
+
       break
     case '--help' === args[0]:
       console.log(`To create a project structure from the boilerplate run\n$ npx toweran create-project [project path]`)
@@ -61,6 +67,9 @@ try {
 
     fs.copySync(`${moduleDir}/boilerplate/.gitignore.content`, `${projectDir}/.gitignore`)
 
+    fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env-example`)
+    fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env`)
+
     const gitKeepExpression = new RegExp(`${projectDir}\/(${targetDirs.join('|')})\/(.*\/)?\.gitkeep$`, 'i')
 
     glob.sync(`${projectDir}/**/.gitkeep`).forEach(file => {
@@ -69,9 +78,44 @@ try {
       }
     })
 
-    let  bootstrapFileContent = fs.readFileSync(`${projectDir}/bootstrap.js`, 'utf-8')
+    let bootstrapFileContent = fs.readFileSync(`${projectDir}/bootstrap.js`, 'utf-8')
     bootstrapFileContent = bootstrapFileContent.replace(`require('../toweran')`, `require('toweran')`)
     fs.writeFileSync(`${projectDir}/bootstrap.js`, bootstrapFileContent, 'utf8')
+
+    if (fs.existsSync(`${projectDir}/package.json`)) {
+      try {
+        let packageJsonContent = fs.readFileSync(`${projectDir}/package.json`, 'utf-8')
+        packageJsonContent = JSON.parse(packageJsonContent)
+        packageJsonContent.jest = {
+          "testRegex": "/tests/.*Test.js$",
+          "rootDir": "."
+        }
+
+        if (!packageJsonContent.scripts) {
+          packageJsonContent.scripts = {}
+        }
+
+        packageJsonContent.scripts.test = "jest --runInBand"
+
+        //Push dependencies manually for travis test environment
+        if(options.travisFixtures) {
+          let modulePackageJson = fs.readFileSync(`${moduleDir}/package.json`, 'utf-8')
+          modulePackageJson = JSON.parse(modulePackageJson)
+
+          packageJsonContent.dependencies = modulePackageJson.dependencies
+          packageJsonContent.dependencies.toweran = 'file:/..'
+
+          packageJsonContent.devDependencies = modulePackageJson.devDependencies
+        }
+
+        packageJsonContent = JSON.stringify(packageJsonContent, null, 2) + '\n'
+
+        fs.writeFileSync(`${projectDir}/package.json`, packageJsonContent, 'utf-8')
+
+      } catch (e) {
+        console.warn(`x package.json is found, but can't update!`)
+      }
+    }
 
     console.log(`🏰 Done`)
   })()

@@ -29,6 +29,7 @@
   "dependencies": {
     "addict-ioc": "^2.5.6",
     "check-types": "^10.1.1",
+    "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
     "winston": "^3.2.1",
@@ -39,7 +40,7 @@
     "rootDir": "."
   },
   "engines": {
-    "node": ">=11.7.0"
+    "node": ">=10.7.0"
   },
   "devDependencies": {
     "jest": "^24.9.0"
