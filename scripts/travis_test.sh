@@ -13,7 +13,7 @@ if [[ ${TOWERAN_PACKAGE_TEST} < 1 ]]; then
     exit 1
 fi;
 
-#Test the boilerplace
+#Test the boilerplate
 cd "${SCRIPT_PATH}/.."
 TOWERAN_BOILERPLATE_TEST=0
 
