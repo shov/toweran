@@ -10,6 +10,13 @@
 const path = require('path')
 const fs = require('fs-extra')
 const glob = require('glob')
+const chalk = require('chalk')
+
+const symbol = {
+  v: '✓',
+  i: 'i',
+  x: '✗'
+}
 
 const moduleDir = path.resolve(__dirname + '/..')
 
@@ -55,17 +62,18 @@ try {
 
   //Process arguments
   if (!args[0]) {
-    throw new Error(`Unknown action, run \n$ npx toweran --help\nto get more information`)
+    throw new Error(chalk`{red ${symbol.x}} Unknown action, run: \n\t$ npx toweran --help\nto get more information`)
   }
 
   //Choose the action
   switch (args[0]) {
     case 'create-project':
       action = createProject
+      console.info(chalk`{green ${symbol.v}} Creating a project...`)
       break
 
     default:
-      throw new Error(`create-project is only one supported action for now! \n$ npx toweran create-project [project path]`)
+      throw new Error(chalk`{red ${symbol.x}} create-project is only one supported action for now! \n\t$ npx toweran create-project [project path]`)
   }
 
   //Call the action
@@ -89,9 +97,10 @@ function createProject(targetPath = '') {
   try {
     fs.ensureDirSync(projectDir, 0o2775)
   } catch (e) {
-    throw new Error(`Given path '${projectDir}' is exists and is not a directory!`)
+    throw new Error(chalk`{red ${symbol.x}} Given path '${projectDir}' exists and is not a directory!`)
   }
 
+  console.info(chalk`{green ${symbol.v}} The path is good-to-go: ${projectDir}`)
 
   const targetDirs = []
 
@@ -110,6 +119,8 @@ function createProject(targetPath = '') {
   fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env-example`)
   fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env`)
 
+  console.info(chalk`{green ${symbol.v}} The boilerplate has been copied`)
+
   const gitKeepExpression = new RegExp(`${projectDir}\/(${targetDirs.join('|')})\/(.*\/)?\.gitkeep$`, 'i')
 
   glob.sync(`${projectDir}/**/.gitkeep`).forEach(file => {
@@ -118,11 +129,17 @@ function createProject(targetPath = '') {
     }
   })
 
+  console.info(chalk`{green ${symbol.v}} Clean up is done`)
+
   let bootstrapFileContent = fs.readFileSync(`${projectDir}/bootstrap.js`, 'utf-8')
   bootstrapFileContent = bootstrapFileContent.replace(`require('../toweran')`, `require('toweran')`)
   fs.writeFileSync(`${projectDir}/bootstrap.js`, bootstrapFileContent, 'utf8')
 
+  console.info(chalk`{green ${symbol.v}} Toweran dependence set as an module`)
+
   if (fs.existsSync(`${projectDir}/package.json`)) {
+    console.info(chalk`{yellow ${symbol.i}} package.json has been detected`)
+
     try {
       let packageJsonContent = fs.readFileSync(`${projectDir}/package.json`, 'utf-8')
       packageJsonContent = JSON.parse(packageJsonContent)
@@ -139,6 +156,8 @@ function createProject(targetPath = '') {
 
       //Push dependencies manually for travis test environment
       if (this.opts.travisFixtures) {
+        console.info(chalk`{yellow ${symbol.i}} Travis fixtures are on`)
+
         let modulePackageJson = fs.readFileSync(`${moduleDir}/package.json`, 'utf-8')
         modulePackageJson = JSON.parse(modulePackageJson)
 
@@ -152,8 +171,10 @@ function createProject(targetPath = '') {
 
       fs.writeFileSync(`${projectDir}/package.json`, packageJsonContent, 'utf-8')
 
+      console.info(chalk`{green ${symbol.v}} package.json has been updated`)
+
     } catch (e) {
-      console.warn(`x package.json is found, but can't update!`)
+      console.warn(chalk`{orange ${symbol.x}} Can't update package.json, skip`)
     }
   }
 
@@ -164,7 +185,7 @@ function createProject(targetPath = '') {
  * Print the help
  */
 function printHelp() {
-  console.log(`To create a project structure from the boilerplate run\n$ npx toweran create-project [project path]`)
+  console.log(chalk`{yellow ${symbol.i}} To create a project structure from the boilerplate run:\n\t$ npx toweran create-project [project path]`)
 }
 
 /**
