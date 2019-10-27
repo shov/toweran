@@ -4,4 +4,5 @@
 /laradock
 /node_modules
 /test/data
+/test_project
 .DS_Store
