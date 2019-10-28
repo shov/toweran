@@ -37,8 +37,8 @@
     "winston-daily-rotate-file": "^4.2.1"
   },
   "jest": {
-    "testRegex": "/tests/.*Test.js$",
-    "rootDir": "."
+    "testRegex": ".*Test.js$",
+    "testPathDirs": ["tests"]
   },
   "engines": {
     "node": ">=10.7.0"

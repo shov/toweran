@@ -38,4 +38,7 @@ toweran.ContainerInterface = require(FRAMEWORK_PATH + '/lib/contracts/ContainerI
 toweran.Logger = require(FRAMEWORK_PATH + '/lib/Logger')
 toweran.ContainerRegistration = require(FRAMEWORK_PATH + '/lib/ContainerRegistration')
 toweran.Container = require(FRAMEWORK_PATH + '/lib/Container')
+toweran.ConfigReader = require(FRAMEWORK_PATH + '/lib/ConfigReader')
+
+
 toweran.App = require(FRAMEWORK_PATH + '/lib/App')

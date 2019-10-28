@@ -144,8 +144,8 @@ function createProject(targetPath = '') {
       let packageJsonContent = fs.readFileSync(`${projectDir}/package.json`, 'utf-8')
       packageJsonContent = JSON.parse(packageJsonContent)
       packageJsonContent.jest = {
-        "testRegex": "/tests/.*Test.js$",
-        "rootDir": "."
+          "testRegex": ".*Test.js$",
+          "testPathDirs": ["tests"]
       }
 
       if (!packageJsonContent.scripts) {
