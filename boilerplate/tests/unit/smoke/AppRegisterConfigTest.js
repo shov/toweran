@@ -2,20 +2,14 @@
 
 const fs = require('fs-extra')
 
-describe(`Basic positive`, () => {
-  it(`The app is able to be initialized without exceptions`, () => {
-    const act = () => {
-      const app = require('../bootstrap')
-      app
-        .register()
-        .boot()
-    }
+describe(`App configuration test`, () => {
+  let app
 
-    expect(act).not.toThrow(Error)
+  beforeAll(() => {
+    app = require('../../bootstrap')
   })
 
-  it(`The app has configuration`, () => {
-    const app = require('../bootstrap')
+  it(`Basic positive`, () => {
 
     fs.ensureDirSync(toweran.TEST_PATH + '/data/config', 0o2775)
     fs.writeFileSync(toweran.TEST_PATH + '/data/config/app.js', `
@@ -32,6 +26,8 @@ describe(`Basic positive`, () => {
       })
       .boot()
 
+    fs.unlinkSync(toweran.TEST_PATH + '/data/config/app.js')
+
     const config = app.get('config')
 
     expect(typeof config).toBe('object')
@@ -41,4 +37,5 @@ describe(`Basic positive`, () => {
       mocked: 'mocked'
     })
   })
+
 })
