@@ -6,9 +6,14 @@
  */
 module.exports = {
   /**
-   * Application level service providers, must be instances of {BasicServiceProvider}
+   * Application level service providers, must be {BasicServiceProvider} child classes (constructors)
    */
-  serviceProviders: [],
+  serviceProviders: [
+    //Core service providers
+    toweran.DependencyInjectionServiceProvider,
+
+    //App service providers
+  ],
 
   /**
    * Jobs

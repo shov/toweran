@@ -29,7 +29,7 @@ try {
    * Set options
    */
   const opts = {
-    travisFixtures: false
+    ciFixtures: false
   }
 
   /**
@@ -154,9 +154,9 @@ function createProject(targetPath = '') {
 
       packageJsonContent.scripts.test = "jest --runInBand"
 
-      //Push dependencies manually for travis test environment
-      if (this.opts.travisFixtures) {
-        console.info(chalk`{yellow ${symbol.i}} Travis fixtures are on`)
+      //Push dependencies manually for ci test environment
+      if (this.opts.ciFixtures) {
+        console.info(chalk`{yellow ${symbol.i}} CI fixtures are on`)
 
         let modulePackageJson = fs.readFileSync(`${moduleDir}/package.json`, 'utf-8')
         modulePackageJson = JSON.parse(modulePackageJson)
