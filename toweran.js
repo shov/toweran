@@ -15,6 +15,11 @@ toweran.FRAMEWORK_PATH = path.resolve(__dirname)
 const FRAMEWORK_PATH = toweran.FRAMEWORK_PATH
 
 /**
+ * Constants
+ */
+toweran.C = require(FRAMEWORK_PATH + '/lib/constants')
+
+/**
  * Exceptions
  */
 toweran.InvalidArgumentException = require(FRAMEWORK_PATH + '/lib/exceptions/InvalidArgumentException')
