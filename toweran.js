@@ -23,6 +23,7 @@ toweran.C = require(FRAMEWORK_PATH + '/lib/constants')
  * Exceptions
  */
 toweran.InvalidArgumentException = require(FRAMEWORK_PATH + '/lib/exceptions/InvalidArgumentException')
+toweran.ResourceNotFoundException = require(FRAMEWORK_PATH + '/lib/exceptions/ResourceNotFoundException')
 
 /**
  * Object that helps to validate
@@ -51,6 +52,7 @@ toweran.ConfigReader = require(FRAMEWORK_PATH + '/lib/ConfigReader')
 /**
  * Core service providers
  */
+toweran.HelperServiceProvider = require(FRAMEWORK_PATH + '/lib/serviceProviders/HelperServiceProvider')
 toweran.DependencyInjectionServiceProvider = require(FRAMEWORK_PATH + '/lib/serviceProviders/DependencyInjectionServiceProvider')
 toweran.EventServiceProvider = require(FRAMEWORK_PATH + '/lib/serviceProviders/EventServiceProvider')
 

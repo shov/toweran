@@ -10,6 +10,7 @@ module.exports = {
    */
   serviceProviders: [
     //Core service providers
+    toweran.HelperServiceProvider,
     toweran.DependencyInjectionServiceProvider,
 
     //App service providers
