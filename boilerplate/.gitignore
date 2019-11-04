@@ -5,6 +5,6 @@
 /logs
 /certs
 /node_modules
-/test/data
+/tests/data
 .env
 .DS_Store
