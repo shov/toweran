@@ -1,11 +1,17 @@
 'use strict'
 
-describe(`Basic positive`, () => {
+describe(`Application`, () => {
+  let app
+
+  beforeAll(() => {
+    app = require('../../bootstrap')
+  })
+
   it(`The app is able to be initialized without exceptions`, () => {
     const act = () => {
-      const app = require('../bootstrap')
-      app.register()
-      app.init()
+      app
+        .register()
+        .boot()
     }
 
     expect(act).not.toThrow(Error)
