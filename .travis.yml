@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - dev
     - /release\/.*/
 language: node_js
 node_js:
