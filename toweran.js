@@ -31,6 +31,7 @@ toweran.must = new (require(FRAMEWORK_PATH + '/lib/Must'))
 toweran.LoggerInterface = require(FRAMEWORK_PATH + '/lib/contracts/LoggerInterface')
 toweran.ContainerRegistrationInterface = require(FRAMEWORK_PATH + '/lib/contracts/ContainerRegistrationInterface')
 toweran.ContainerInterface = require(FRAMEWORK_PATH + '/lib/contracts/ContainerInterface')
+toweran.ListenerInterface = require(FRAMEWORK_PATH + '/lib/contracts/ListenerInterface')
 
 toweran.BasicServiceProvider = require(FRAMEWORK_PATH + '/lib/contracts/BasicServiceProvider')
 
@@ -46,6 +47,7 @@ toweran.ConfigReader = require(FRAMEWORK_PATH + '/lib/ConfigReader')
  * Core service providers
  */
 toweran.DependencyInjectionServiceProvider = require(FRAMEWORK_PATH + '/lib/serviceProviders/DependencyInjectionServiceProvider')
+toweran.EventServiceProvider = require(FRAMEWORK_PATH + '/lib/serviceProviders/EventServiceProvider')
 
 /**
  * The App
