@@ -8,6 +8,8 @@ process.env.NODE_ENV = 'testing'
 
 const app = require('../bootstrap')
 
+toweran.TEST_PATH = __dirname
+
 /**
  * Prevent the application to be started in the testing mode
  */

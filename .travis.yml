@@ -1,7 +1,8 @@
 branches:
   only:
     - master
-    - release/.*
+    - dev
+    - /release\/.*/
 language: node_js
 node_js:
   - 10.7.0
@@ -10,4 +11,4 @@ cache:
 install:
   - npm ci
 script:
-  - scripts/travis_test.sh
+  - scripts/ci_test.sh

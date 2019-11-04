@@ -28,6 +28,7 @@
   "homepage": "https://github.com/shov/toweran#readme",
   "dependencies": {
     "addict-ioc": "^2.5.6",
+    "chalk": "^2.4.2",
     "check-types": "^10.1.1",
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
@@ -36,8 +37,8 @@
     "winston-daily-rotate-file": "^4.2.1"
   },
   "jest": {
-    "testRegex": "/tests/.*Test.js$",
-    "rootDir": "."
+    "testRegex": ".*Test.js$",
+    "testPathDirs": ["tests"]
   },
   "engines": {
     "node": ">=10.7.0"
