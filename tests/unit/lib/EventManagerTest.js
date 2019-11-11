@@ -23,7 +23,7 @@ describe(`Event Manager unit tests`, () => {
         expect(act).not.toThrow(InvalidArgumentException)
     })
 
-    it(`"exists" method should return true if event exists`, () => {
+    it(`exists method should return true if event exists`, () => {
         const eventManager = new EventManager({
             events: { events: [{ event: 'eventName', listeners: [] }] }
         })
@@ -35,7 +35,7 @@ describe(`Event Manager unit tests`, () => {
         expect(exists).toBe(true)
     })
 
-    it(`"exists" method should return false if event not exists`, () => {
+    it(`exists method should return false if event not exists`, () => {
         const eventManager = new EventManager({
             events: { events: [{ event: 'eventName', listeners: [] }] }
         })
@@ -47,7 +47,7 @@ describe(`Event Manager unit tests`, () => {
         expect(exists).toBe(false)
     })
 
-    it(`"should not be able to run before init`, () => {
+    it(`should not be able to run before init`, () => {
         const act = () => {
             const eventManager = new EventManager({
                 events: { events: [{ event: 'eventName', listeners: [] }] }
@@ -59,7 +59,7 @@ describe(`Event Manager unit tests`, () => {
         expect(act).toThrow(Error)
     })
 
-    it(`"should be functional after initialization`, () => {
+    it(`should be functional after initialization`, () => {
         const act = () => {
             const eventManager = new EventManager({
                 events: { events: [{ event: 'eventName', listeners: [] }] }
@@ -70,7 +70,23 @@ describe(`Event Manager unit tests`, () => {
             eventManager.dispatch('eventName')
         }
 
-        !expect(act).not.toThrow(Error)
+        expect(act).not.toThrow(Error)
+    })
+
+    it(`dispatch method can accept any payload`, () => {
+        const act = () => {
+            const eventManager = new EventManager({})
+
+            eventManager.init()
+
+            eventManager.dispatch('event', null)
+            eventManager.dispatch('event')
+            eventManager.dispatch('event', '')
+            eventManager.dispatch('event', 'payload')
+            eventManager.dispatch('event', {})
+        }
+
+        expect(act).not.toThrow(Error)
     })
 
     // TODO should contains init, dispatch
