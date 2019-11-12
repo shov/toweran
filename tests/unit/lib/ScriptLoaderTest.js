@@ -67,7 +67,7 @@ describe(`Check strategies`, () => {
         fs.ensureDirSync(toweran.TEST_PATH + `/data/scriptToBeLoaded/${i}`, 0o2775)
         fs.writeFileSync(toweran.TEST_PATH + `/data/scriptToBeLoaded/${i}/TestClassName.js`, dataSet.content)
 
-        const result = scriptLoader.isES6Class(toweran.TEST_PATH + `/data/scriptToBeLoaded/${i}/TestClassName.js`)
+        const result = scriptLoader.isClass(toweran.TEST_PATH + `/data/scriptToBeLoaded/${i}/TestClassName.js`)
         fs.unlinkSync(toweran.TEST_PATH + `/data/scriptToBeLoaded/${i}/TestClassName.js`)
 
         expect(result).toBe(dataSet.expected)
@@ -88,10 +88,19 @@ describe(`Check strategies`, () => {
           expected: true
         },
         {
-          title: 'positive: contents no ES6 class, but exports a constructor of class',
+          title: 'positive: contents no ES6 class, but exports a constructor of class 1',
           content: `
             'use strict'
             const TestClassName = function () {}
+            module.exports = TestClassName
+          `,
+          expected: true
+        },
+        {
+          title: 'positive: contents no ES6 class, but exports a constructor of class 2',
+          content: `
+            'use strict'
+            function TestClassName () {}
             module.exports = TestClassName
           `,
           expected: true
