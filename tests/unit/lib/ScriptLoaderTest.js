@@ -3,7 +3,6 @@
 require('../../bootstrap')
 
 const fs = require('fs-extra')
-const check = require('check-types')
 const Logger = toweran.Logger
 
 describe(`Check strategies`, () => {
@@ -106,6 +105,15 @@ describe(`Check strategies`, () => {
           expected: true
         },
         {
+          title: 'positive: contents no ES6 class, but exports a constructor of class 3',
+          content: `
+            'use strict'
+            
+            module.exports = function TestClassName () {}
+          `,
+          expected: true
+        },
+        {
           title: 'negative: contents ES6 class, but doesn\'t export it',
           content: `
             'use strict'
@@ -140,6 +148,88 @@ describe(`Check strategies`, () => {
           `,
           expected: false
         },
+      ]
+    }
+  })
+
+  describe(`Load scripts the process`, () => {
+    const dir = toweran.TEST_PATH + '/data/scriptToBeLoadedAndProcessed'
+    fs.ensureDirSync(dir, 0o2775)
+
+    pathPatternsDataProvider().forEach((pattern, dataSetIndex) => {
+      it(`positive #${dataSetIndex}`, () => {
+
+        fs.writeFileSync(dir + '/aScript.js', `
+          'use strict'
+          exports.foo = () => {}
+        `)
+
+        fs.writeFileSync(dir + '/ClassToBeTestedA.js', `
+          'use strict'
+          
+          global.affectRequire = global.affectRequire || 0
+          global.affectRequire += 1
+          
+          class ClassToBeTestedA {
+            
+          }
+          module.exports = ClassToBeTestedA
+        `)
+
+        fs.writeFileSync(dir + '/ClassToBeTestedB.js', `
+          'use strict'
+          
+          global.affectRequire = global.affectRequire || 0
+          global.affectRequire += 1
+          
+          module.exports = function ClassToBeTestedB () {}
+        `)
+
+        const result = scriptLoader.processExpression(pattern, files => {
+          return files
+            .filter(scriptLoader.isClass.bind(scriptLoader))
+            .reduce((result, file) => {
+              const constructor = require(file)
+
+              if (!constructor.prototype || !constructor.prototype.constructor || !constructor.prototype.constructor.name) {
+                return result
+              }
+
+              const className = constructor.prototype.constructor.name
+
+              if (className !== file.replace(/(.*)?\/([^\/]+)\.js$/, '$2')) {
+                return result
+              }
+
+              result.push({
+                file,
+                className,
+                constructor
+              })
+
+              return result
+            }, [])
+        })
+
+        fs.unlinkSync(dir + '/aScript.js')
+        fs.unlinkSync(dir + '/ClassToBeTestedA.js')
+        fs.unlinkSync(dir + '/ClassToBeTestedB.js')
+
+        expect(result.length).toBe(2)
+
+        result.forEach(stats => {
+          expect(stats.className).toBe(stats.constructor.prototype.constructor.name)
+        })
+
+        expect(global.affectRequire).toBe(2)
+      })
+    })
+
+    function pathPatternsDataProvider() {
+      return [
+        dir,
+        dir + '/*.js',
+        dir + '/**/*.js',
       ]
     }
   })
