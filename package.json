@@ -33,12 +33,15 @@
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
+    "simple-annotation": "^0.1.6",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.2.1"
   },
   "jest": {
     "testRegex": ".*Test.js$",
-    "testPathDirs": ["tests"]
+    "testPathDirs": [
+      "tests"
+    ]
   },
   "engines": {
     "node": ">=10.7.0"
