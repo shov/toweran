@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/shov/toweran#readme",
   "dependencies": {
+    "@types/check-types": "^7.3.1",
     "addict-ioc": "^2.5.6",
     "chalk": "^2.4.2",
     "check-types": "^10.1.1",
