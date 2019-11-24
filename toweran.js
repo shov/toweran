@@ -1,7 +1,7 @@
 'use strict'
 
 //TODO: Global NS, contracts, exceptions, must. Make sure everything is here and remove the todo
-
+//TODO: make PATH constants immutable if not testing env
 const path = require('path')
 
 /**
