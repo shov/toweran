@@ -3,6 +3,7 @@
 require('../../bootstrap')
 
 const fs = require('fs-extra')
+const check = require('check-types')
 const path = require('path')
 const Logger = toweran.Logger
 
@@ -51,9 +52,14 @@ describe(`Load ES6 Classes`, () => {
     container.instance('logger', logger)
 
     //redefine app path
-    toweran.APP_PATH = path.resolve(toweran.TEST_PATH + '/data/app_root')
+    toweran.APP_PATH = path.resolve(toweran.TEST_PATH + '/data/appRootDITesting')
     fs.ensureDirSync(toweran.APP_PATH, 0o2775)
 
+  })
+
+
+  afterEach(() => {
+    unlinkFiles(toweran.APP_PATH)
   })
 
   it(`Positive, load classes from sub-dir, path as string, dir`, () => {
@@ -62,7 +68,7 @@ describe(`Load ES6 Classes`, () => {
       app: {
         di: [
           {
-            path: `${toweran.APP_PATH} + '/app'`
+            path: `${toweran.APP_PATH}/app`
           }
         ]
       }
@@ -76,16 +82,99 @@ describe(`Load ES6 Classes`, () => {
 
     di.init()
 
-    //TODO: resolve one from container, call a method, check expected
+    const alpha = container.get(`app.Alpha`)
 
-    unlinkFiles(config.app.di[0].path)
+    expect(check.object(alpha)).toBe(true)
+    expect(check.instance(alpha, require(`${toweran.APP_PATH}/app/Alpha`)))
+    expect(alpha.invoke()).toBe(42)
+
   })
 })
 
-function createFiles(dir) {
-  //TODO: implement
+function createFiles() {
+  const dir  = `${toweran.APP_PATH}/app`
+
+  fs.ensureDirSync(`${dir}/domain/x`, 0o2775)
+  fs.writeFileSync(`${dir}/Alpha.js`, `
+  'use strict'
+  
+  class Alpha {
+    /**
+     * @DI app.domain.x.Beta
+     * @DI logger
+     * @param {Beta} beta
+     * @param {Logger} logger
+     **/
+     constructor(beta, logger) {
+       this._beta = beta
+       
+       this._logger = logger
+       logger.log('Alpha created')
+     }
+     
+     invoke() {
+       this._logger.log('Call invoke on alpha')
+       return this._beta.getZetta().secret
+     }
+  }
+  
+  module.exports = Alpha
+  `)
+
+  fs.writeFileSync(`${dir}/domain/x/Beta.js`, `
+  'use strict'
+  
+  class Beta {
+    /**
+     * @DI app.domain.x.Zetta
+     * @DI logger
+     * @param {Zetta} zetta
+     * @param {Logger} logger
+     **/
+     constructor(zetta, logger) {
+       this._zetta = zetta
+       
+       this._logger = logger
+       logger.log('Beta created')
+     }
+     
+     getZetta() {
+       this._logger.log('Call get zetta on beta')
+       return this._zetta
+     }
+  }
+  
+  module.exports = Beta
+  `)
+
+  fs.writeFileSync(`${dir}/domain/x/Zetta.js`, `
+  'use strict'
+  
+  class Zetta {
+    /**
+     * @DI logger
+     * @param {Logger} logger
+     **/
+     constructor(logger) {
+       this._secret = 42
+       
+       this._logger = logger
+       logger.log('Zetta created')
+     }
+     
+     get secret() {
+       return this._secret
+     }
+  }
+  
+  module.exports = Zetta
+  `)
 }
 
-function unlinkFiles(dir) {
-  //TODO: implement
+function unlinkFiles() {
+  const dir = `${toweran.APP_PATH}/app`
+
+  fs.unlinkSync(`${dir}/Alpha.js`)
+  fs.unlinkSync(`${dir}/domain/x/Beta.js`)
+  fs.unlinkSync(`${dir}/domain/x/Zetta.js`)
 }
