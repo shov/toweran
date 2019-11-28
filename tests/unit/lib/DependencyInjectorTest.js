@@ -46,17 +46,18 @@ describe(`Load ES6 Classes`, () => {
       logger
     )
 
-    container = new (toweran.Container)()
-
-    //to use in the tests
-    container.instance('logger', logger)
-
     //redefine app path
     toweran.APP_PATH = path.resolve(toweran.TEST_PATH + '/data/appRootDITesting')
     fs.ensureDirSync(toweran.APP_PATH, 0o2775)
 
   })
 
+  beforeEach(() => {
+    container = new (toweran.Container)()
+
+    //to use in the tests
+    container.instance('logger', logger)
+  })
 
   afterEach(() => {
     unlinkFiles(toweran.APP_PATH)
@@ -89,12 +90,45 @@ describe(`Load ES6 Classes`, () => {
     expect(alpha.invoke()).toBe(42)
 
   })
+
+  it(`Positive, load classes from sub-dir, path as object, include and exclude, glob pattern`, () => {
+    fs.ensureDirSync(toweran.APP_PATH + '/app', 0o2775)
+    config = {
+      app: {
+        di: [
+          {
+            path: {
+              include: [`${toweran.APP_PATH}/app/**/*.js`],
+              exclude: `${toweran.APP_PATH}/app/noIndex`,
+            }
+          }
+        ]
+      }
+    }
+
+    createFiles()
+
+    di = new (require(toweran.FRAMEWORK_PATH + '/lib/DependencyInjector'))(
+      logger, container, config, scriptLoader, annotationInspector
+    )
+
+    di.init()
+
+    const alpha = container.get(`app.Alpha`)
+
+    expect(check.object(alpha)).toBe(true)
+    expect(check.instance(alpha, require(`${toweran.APP_PATH}/app/Alpha`)))
+    expect(alpha.invoke()).toBe(42)
+    expect(container.has('app.noIndex.Gray')).toBe(false)
+
+  })
 })
 
 function createFiles() {
   const dir  = `${toweran.APP_PATH}/app`
 
   fs.ensureDirSync(`${dir}/domain/x`, 0o2775)
+  fs.ensureDirSync(`${dir}/noIndex`, 0o2775)
   fs.writeFileSync(`${dir}/Alpha.js`, `
   'use strict'
   
@@ -169,6 +203,29 @@ function createFiles() {
   
   module.exports = Zetta
   `)
+
+  fs.writeFileSync(`${dir}/noIndex/Gray.js`, `
+  'use strict'
+  
+  class Gray {
+    /**
+     * @DI logger
+     * @param {Logger} logger
+     **/
+     constructor(logger) {
+       this._secret = 55
+       
+       this._logger = logger
+       logger.log('Gray created')
+     }
+     
+     get secret() {
+       return this._secret
+     }
+  }
+  
+  module.exports = Gray
+  `)
 }
 
 function unlinkFiles() {
@@ -177,4 +234,5 @@ function unlinkFiles() {
   fs.unlinkSync(`${dir}/Alpha.js`)
   fs.unlinkSync(`${dir}/domain/x/Beta.js`)
   fs.unlinkSync(`${dir}/domain/x/Zetta.js`)
+  fs.unlinkSync(`${dir}/noIndex/Gray.js`)
 }
