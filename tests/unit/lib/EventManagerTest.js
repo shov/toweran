@@ -31,6 +31,8 @@ const mockedPayload = {
     email: 'test@test.com',
 }
 
+/*------------------------------------------------------*/
+
 describe(`Event Manager unit tests`, () => {
 
     const InvalidArgumentException = toweran.InvalidArgumentException
@@ -75,16 +77,16 @@ describe(`Event Manager unit tests`, () => {
         expect(exists).toBe(false)
     })
 
-    it(`should not be able to run before init`, () => {
-        const act = () => {
-            const eventManager = new EventManager({
-                events: { events: [{ event: 'eventName', listeners: [] }] }
-            })
+    it(`should not be able to run before init`, async () => {
+        const eventManager = new EventManager({
+            events: { events: [{ event: 'eventName', listeners: [] }] }
+        })
 
-            eventManager.dispatch('eventName')
+        try {
+            await eventManager.dispatch('eventName')
+        } catch (e) {
+            expect(e).toBeInstanceOf(Error)
         }
-
-        expect(act).toThrow(Error)
     })
 
     it(`should be functional after initialization`, () => {
@@ -141,5 +143,71 @@ describe(`Event Manager unit tests`, () => {
         expect(listenerPayload).toBe(mockedPayload)
     })
 
-    // TODO should contains init, dispatch
+    it('listeners can return promises', async () => {
+
+        let state = false
+
+        const mockedPromiseListener = class extends ListenerInterface {
+            handle(payload) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        state = true
+                        resolve()
+                    }, 0)
+                })
+            }
+        };
+
+        const eventManager = new EventManager({
+            events: { events: [{ event: 'eventName', listeners: [ new mockedPromiseListener() ] }] }
+        })
+
+        eventManager.init()
+
+        await eventManager.dispatch('eventName')
+
+        expect(state).toEqual(true)
+    })
+
+    it('listeners can be async', async () => {
+
+        let state = false
+
+        const mockedAsyncListener = class extends ListenerInterface {
+            async handle(payload) {
+                state = true
+            }
+        };
+
+        const eventManager = new EventManager({
+            events: { events: [{ event: 'eventName', listeners: [ new mockedAsyncListener() ] }] }
+        })
+
+        eventManager.init()
+
+        await eventManager.dispatch('eventName')
+
+        expect(state).toEqual(true)
+    })
+
+    it('listeners can be non-promises', () => {
+
+        let state = false
+
+        const mockedNonPromiseListener = class extends ListenerInterface {
+            handle(payload) {
+                state = true
+            }
+        };
+
+        const eventManager = new EventManager({
+            events: { events: [{ event: 'eventName', listeners: [ new mockedNonPromiseListener() ] }] }
+        })
+
+        eventManager.init()
+
+        eventManager.dispatch('eventName')
+
+        expect(state).toEqual(true)
+    })
 })
