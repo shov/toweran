@@ -21,7 +21,7 @@ module.exports = {
       event: 'start_application',
       listeners: [
         new (require('../listeners/AppStartedListener')),
-        // 'listeners.AppStartedListener'
+        // 'listeners.AppStartedListener' => not implemented yet
       ],
     },
     {
