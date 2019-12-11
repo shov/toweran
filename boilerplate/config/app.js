@@ -20,24 +20,37 @@ module.exports = {
    * Dependency Injection
    */
   di: [
+
+    /** Domain */
     {
-      /**
-       * TODO: path can be a string, then include it
-       * TODO: include/exclude each could be a string, then turn it to array
-       * TODO: exclude has higher priority than include
-       * TODO: a file mustn't be read twice
-       * TODO: a path could be glob pattern ar a path to a directory
-       */
       path: {
-        include: `${toweran.APP_PATH}/app`,
-        exclude: [
-          `${toweran.APP_PATH}/app/http`,
-          `${toweran.APP_PATH}/app/serviceProviders`,
-        ]
+        include: `${toweran.APP_PATH}/app/domain`,
       },
       strategy: toweran.C.DI.DOT_NOTATION,
-      base: `app.`
-    }
+      base: `app.domain`,
+    },
+
+    /** Listeners */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/listeners/*Listener.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
+
+    /** HTTP */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/app/http/controllers/*Controller.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
+    {
+      path: {
+        include: `${toweran.APP_PATH}/app/http/middleware/*Middleware.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
   ],
 
   /**

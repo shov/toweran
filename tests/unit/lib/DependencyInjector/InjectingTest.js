@@ -11,8 +11,7 @@ const must = toweran.must
 
 const Logger = toweran.Logger
 
-//TODO: write well described and full covering tests
-describe(`Load ES6 Classes`, () => {
+describe(`Load ES6 Classes, Dot notation`, () => {
 
   let logger
 
@@ -92,12 +91,19 @@ describe(`Load ES6 Classes`, () => {
         di.init()
 
         for (let definition of set.classes) {
-          const instance = container.get(definition.key)
-          const constructor = require(definition.path)
 
-          expect(instance instanceof constructor).toBe(true)
+          if (definition.has) {
+            const instance = container.get(definition.key)
+            const constructor = require(definition.path)
 
-          expect(instance.expMethod()).toBe(definition.expVal)
+            expect(instance instanceof constructor).toBe(true)
+
+            expect(instance.expMethod()).toBe(definition.expVal)
+
+          } else {
+            expect(container.has(definition.key)).toBe(false)
+          }
+
         }
       })
     })
@@ -110,14 +116,14 @@ function casesDataProvider() {
       comment: `app as dir, flat`,
       di: [
         {
-          path: `${toweran.APP_PATH}/app`,
+          path: `${toweran.APP_PATH}/0/app`,
           base: `app`,
         }
       ],
       classes: [
         {
           name: 'Foo',
-          path: `${toweran.APP_PATH}/app/Foo.js`,
+          path: `${toweran.APP_PATH}/0/app/Foo.js`,
           key: 'app.Foo',
           dependencies: [
             {
@@ -128,11 +134,12 @@ function casesDataProvider() {
           expMethod: () => {
             return 42
           },
-          expVal: 42
+          expVal: 42,
+          has: true,
         },
         {
           name: 'FooBar',
-          path: `${toweran.APP_PATH}/app/FooBar.js`,
+          path: `${toweran.APP_PATH}/0/app/FooBar.js`,
           key: 'app.FooBar',
           dependencies: [
             {
@@ -147,7 +154,397 @@ function casesDataProvider() {
           expMethod: () => {
             return this.foo.expMethod()
           },
-          expVal: 42
+          expVal: 42,
+          has: true,
+        }
+      ]
+    },
+
+    {
+      comment: `app as glob, hierarchical`,
+      di: [
+        {
+          path: `${toweran.APP_PATH}/1/app/**/*`,
+          base: `app`,
+        }
+      ],
+      classes: [
+        {
+          name: 'Foo',
+          path: `${toweran.APP_PATH}/1/app/Foo.js`,
+          key: 'app.Foo',
+          dependencies: [
+            {
+              key: 'logger',
+              variable: 'logger',
+            },
+            {
+              key: 'app.domain.bar.FooBar',
+              variable: 'fooBar',
+            },
+          ],
+          expMethod: () => {
+            return this.fooBar.expMethod()
+          },
+          expVal: 123,
+          has: true,
+        },
+        {
+          name: 'FooBar',
+          path: `${toweran.APP_PATH}/1/app/domain/bar/FooBar.js`,
+          key: 'app.domain.bar.FooBar',
+          dependencies: [],
+          expMethod: () => {
+            return 123
+          },
+          expVal: 123,
+          has: true,
+        }
+      ]
+    },
+
+    {
+      comment: `app as glob, hierarchical, without base`,
+      di: [
+        {
+          path: `${toweran.APP_PATH}/2/app/**/*`,
+        }
+      ],
+      classes: [
+        {
+          name: 'Foo',
+          path: `${toweran.APP_PATH}/2/app/Foo.js`,
+          key: 'Foo',
+          dependencies: [
+            {
+              key: 'logger',
+              variable: 'logger',
+            },
+            {
+              key: 'domain.bar.FooBar',
+              variable: 'fooBar',
+            },
+          ],
+          expMethod: () => {
+            return this.fooBar.expMethod()
+          },
+          expVal: 456,
+          has: true,
+        },
+        {
+          name: 'FooBar',
+          path: `${toweran.APP_PATH}/2/app/domain/bar/FooBar.js`,
+          key: 'domain.bar.FooBar',
+          dependencies: [],
+          expMethod: () => {
+            return 456
+          },
+          expVal: 456,
+          has: true,
+        }
+      ]
+    },
+
+    {
+      comment: `app as glob, hierarchical, with exclude as pattern`,
+      di: [
+        {
+          path: {
+            include: `${toweran.APP_PATH}/3/app/**/*`,
+            exclude: `${toweran.APP_PATH}/3/app/http/**`,
+          },
+          base: 'app'
+        }
+      ],
+      classes: [
+        {
+          name: 'Foo',
+          path: `${toweran.APP_PATH}/3/app/Foo.js`,
+          key: 'app.Foo',
+          dependencies: [
+            {
+              key: 'logger',
+              variable: 'logger',
+            },
+            {
+              key: 'app.domain.bar.FooBar',
+              variable: 'fooBar',
+            },
+          ],
+          expMethod: () => {
+            return this.fooBar.expMethod()
+          },
+          expVal: 456,
+          has: true,
+        },
+        {
+          name: 'FooBar',
+          path: `${toweran.APP_PATH}/3/app/domain/bar/FooBar.js`,
+          key: 'app.domain.bar.FooBar',
+          dependencies: [],
+          expMethod: () => {
+            return 456
+          },
+          expVal: 456,
+          has: true,
+        },
+        {
+          name: 'AbController',
+          path: `${toweran.APP_PATH}/3/app/http/controllers/AbController.js`,
+          key: 'app.http.controllers.AbController',
+          dependencies: [],
+          expMethod: () => {
+          },
+          has: false,
+        }
+      ]
+    },
+
+    {
+      comment: `three paths, with cross excludes, diff bases`,
+      di: [
+        {
+          path: {
+            include: `${toweran.APP_PATH}/4/app/**/*`,
+            exclude: [
+              `${toweran.APP_PATH}/4/app/http/**`,
+              `${toweran.APP_PATH}/4/app/listeners/**`,
+            ],
+          },
+          base: 'app'
+        },
+        {
+          path: `${toweran.APP_PATH}/4/app/http/controllers/*Controller.js`,
+        },
+        {
+          path: `${toweran.APP_PATH}/4/app/listeners/*Listener.js`,
+        },
+      ],
+      classes: [
+        {
+          name: 'Foo',
+          path: `${toweran.APP_PATH}/4/app/domain/bazX/Foo.js`,
+          key: 'app.domain.bazX.Foo',
+          dependencies: [
+            {
+              key: 'logger',
+              variable: 'logger',
+            },
+            {
+              key: 'app.domain.bar.FooBar',
+              variable: 'fooBar',
+            },
+          ],
+          expMethod: () => {
+            return this.fooBar.expMethod()
+          },
+          expVal: 2989,
+          has: true,
+        },
+        {
+          name: 'FooBar',
+          path: `${toweran.APP_PATH}/4/app/domain/bar/FooBar.js`,
+          key: 'app.domain.bar.FooBar',
+          dependencies: [],
+          expMethod: () => {
+            return 2989
+          },
+          expVal: 2989,
+          has: true,
+        },
+
+        {
+          name: 'SomeThing',
+          path: `${toweran.APP_PATH}/4/app/http/controllers/SomeThing.js`,
+          key: 'SomeThing',
+          dependencies: [],
+          expMethod: () => {
+          },
+          has: false,
+        },
+        { //app key
+          name: 'SomeThing',
+          path: `${toweran.APP_PATH}/4/app/http/controllers/SomeThing.js`,
+          key: 'app.http.controllers.SomeThing',
+          dependencies: [],
+          expMethod: () => {
+          },
+          has: false,
+        },
+
+        {
+          name: 'AbController',
+          path: `${toweran.APP_PATH}/4/app/http/controllers/AbController.js`,
+          key: 'AbController',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          expVal: 2989,
+          has: true,
+        },
+
+        { //app key
+          name: 'StartListener',
+          path: `${toweran.APP_PATH}/4/app/listeners/StartListener.js`,
+          key: 'app.listeners.StartListener',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          has: false,
+        },
+        {
+          name: 'StartListener',
+          path: `${toweran.APP_PATH}/4/app/listeners/StartListener.js`,
+          key: 'StartListener',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          expVal: 2989,
+          has: true,
+        }
+      ]
+    },
+
+    {
+      comment: `three paths, strategy, with cross excludes as dirs, diff bases`,
+      di: [
+        {
+          path: {
+            include: `${toweran.APP_PATH}/5/app/**/*`,
+            exclude: [
+              `${toweran.APP_PATH}/5/app/http`,
+              `${toweran.APP_PATH}/5/app/listeners`,
+            ],
+          },
+          strategy: toweran.C.DI.DOT_NOTATION,
+          base: 'app'
+        },
+        {
+          path: `${toweran.APP_PATH}/5/app/http/controllers/*Controller.js`,
+          strategy: toweran.C.DI.DOT_NOTATION,
+        },
+        {
+          path: `${toweran.APP_PATH}/5/app/listeners/*Listener.js`,
+          strategy: toweran.C.DI.DOT_NOTATION,
+        },
+      ],
+      classes: [
+        {
+          name: 'Foo',
+          path: `${toweran.APP_PATH}/5/app/domain/bazX/Foo.js`,
+          key: 'app.domain.bazX.Foo',
+          dependencies: [
+            {
+              key: 'logger',
+              variable: 'logger',
+            },
+            {
+              key: 'app.domain.bar.FooBar',
+              variable: 'fooBar',
+            },
+          ],
+          expMethod: () => {
+            return this.fooBar.expMethod()
+          },
+          expVal: 2989,
+          has: true,
+        },
+        {
+          name: 'FooBar',
+          path: `${toweran.APP_PATH}/5/app/domain/bar/FooBar.js`,
+          key: 'app.domain.bar.FooBar',
+          dependencies: [],
+          expMethod: () => {
+            return 2989
+          },
+          expVal: 2989,
+          has: true,
+        },
+
+        {
+          name: 'SomeThing',
+          path: `${toweran.APP_PATH}/5/app/http/controllers/SomeThing.js`,
+          key: 'SomeThing',
+          dependencies: [],
+          expMethod: () => {
+          },
+          has: false,
+        },
+        { //app key
+          name: 'SomeThing',
+          path: `${toweran.APP_PATH}/5/app/http/controllers/SomeThing.js`,
+          key: 'app.http.controllers.SomeThing',
+          dependencies: [],
+          expMethod: () => {
+          },
+          has: false,
+        },
+
+        {
+          name: 'AbController',
+          path: `${toweran.APP_PATH}/5/app/http/controllers/AbController.js`,
+          key: 'AbController',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          expVal: 2989,
+          has: true,
+        },
+
+        { //app key
+          name: 'StartListener',
+          path: `${toweran.APP_PATH}/5/app/listeners/StartListener.js`,
+          key: 'app.listeners.StartListener',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          has: false,
+        },
+        {
+          name: 'StartListener',
+          path: `${toweran.APP_PATH}/5/app/listeners/StartListener.js`,
+          key: 'StartListener',
+          dependencies: [
+            {
+              key: 'app.domain.bazX.Foo',
+              variable: 'foo',
+            },
+          ],
+          expMethod: () => {
+            return this.foo.expMethod()
+          },
+          expVal: 2989,
+          has: true,
         }
       ]
     }
@@ -188,6 +585,7 @@ function createClasses(classes) {
       
       module.exports = ${definition.name}
     `
+
     fs.ensureDirSync(definition.path.replace(/^(.*)\/([^/]+\.js)$/, '$1'), 0o2775)
     fs.writeFileSync(definition.path, body)
   }

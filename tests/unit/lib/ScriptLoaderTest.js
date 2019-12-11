@@ -230,6 +230,9 @@ describe(`Check strategies`, () => {
         dir,
         dir + '/*.js',
         dir + '/**/*.js',
+        dir + '/*',
+        dir + '/**/*',
+        dir.slice(0, -1) + '*/**/*',
       ]
     }
   })

@@ -22,6 +22,11 @@ describe(`Dependency Injector pattern cutting`, () => {
         result: '/a/b/c/root/app',
       },
       {
+        comment: 'root dir',
+        pattern: '/a',
+        result: '/a',
+      },
+      {
         comment: 'pattern simple',
         pattern: '/a/b/c/root/app/*',
         result: '/a/b/c/root/app',
