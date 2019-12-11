@@ -34,6 +34,7 @@
     "dotenv": "^8.2.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
+    "rimraf": "^3.0.0",
     "simple-annotation": "^0.1.6",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.2.1"
