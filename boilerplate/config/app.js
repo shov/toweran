@@ -10,9 +10,47 @@ module.exports = {
    */
   serviceProviders: [
     //Core service providers
+    toweran.HelperServiceProvider,
     toweran.DependencyInjectionServiceProvider,
 
     //App service providers
+  ],
+
+  /**
+   * Dependency Injection
+   */
+  di: [
+
+    /** Domain */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/app/domain`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+      base: `app.domain`,
+    },
+
+    /** Listeners */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/listeners/*Listener.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
+
+    /** HTTP */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/app/http/controllers/*Controller.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
+    {
+      path: {
+        include: `${toweran.APP_PATH}/app/http/middleware/*Middleware.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+    },
   ],
 
   /**
