@@ -305,7 +305,7 @@ function casesDataProvider() {
       di: [
         {
           path: {
-            include: `${toweran.APP_PATH}/4/app/**/*`,
+            include: `${toweran.APP_PATH}/4/app/**`,
             exclude: [
               `${toweran.APP_PATH}/4/app/http/**`,
               `${toweran.APP_PATH}/4/app/listeners/**`,
@@ -547,7 +547,7 @@ function casesDataProvider() {
           has: true,
         }
       ]
-    }
+    },
   ]
 }
 
