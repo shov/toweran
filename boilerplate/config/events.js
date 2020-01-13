@@ -10,7 +10,7 @@ module.exports = {
      */
     {
       event: 'sample_event_name',
-      listeners:[
+      listeners: [
         // TODO: and it would be great if we have a possibility to use callbacks here
         // new (require('../listeners/SampleAsyncListener'))
         // new (require('../listeners/SamplePromiseListener'))
