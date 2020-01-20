@@ -76,6 +76,10 @@ const toweran = {
     return must
   },
 
+  /*
+   * Exceptions
+   */
+
   /**
    * @return {InvalidArgumentException}
    * @constructor
@@ -91,6 +95,10 @@ const toweran = {
   get ResourceNotFoundException() {
     return require(FRAMEWORK_PATH + '/lib/exceptions/ResourceNotFoundException')
   },
+
+  /*
+   * Contracts: Interfaces & Basic classes
+   */
 
   /**
    * @return {LoggerInterface}
@@ -132,6 +140,10 @@ const toweran = {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicServiceProvider')
   },
 
+  /*
+   * Core constructors
+   */
+
   /**
    * @return {Logger}
    * @constructor
@@ -164,6 +176,10 @@ const toweran = {
     return require(FRAMEWORK_PATH + '/lib/ConfigReader')
   },
 
+  /*
+   * Core service providers
+   */
+
   /**
    * @return {HelperServiceProvider}
    * @constructor
@@ -186,6 +202,14 @@ const toweran = {
    */
   get EventServiceProvider() {
     return require(FRAMEWORK_PATH + '/lib/serviceProviders/EventServiceProvider')
+  },
+
+  /**
+   * @return {HttpServiceProvider}
+   * @constructor
+   */
+  get HttpServiceProvider() {
+    return require(FRAMEWORK_PATH + '/lib/serviceProviders/HttpServiceProvider')
   },
 
   /**
