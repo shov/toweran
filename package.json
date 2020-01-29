@@ -41,7 +41,7 @@
   },
   "jest": {
     "testRegex": ".*Test.js$",
-    "testPathDirs": [
+    "roots": [
       "tests"
     ]
   },
