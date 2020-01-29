@@ -145,7 +145,7 @@ function createProject(targetPath = '') {
       packageJsonContent = JSON.parse(packageJsonContent)
       packageJsonContent.jest = {
           "testRegex": ".*Test.js$",
-          "testPathDirs": ["tests"]
+          "roots": ["tests"]
       }
 
       if (!packageJsonContent.scripts) {
