@@ -14,6 +14,11 @@ let must = null
  *
  * @property {InvalidArgumentException} InvalidArgumentException - Constructor
  * @property {ResourceNotFoundException} ResourceNotFoundException - Constructor
+ * @property {BadRequestException} BadRequestException - Constructor
+ * @property {UnauthorizedException} UnauthorizedException - Constructor
+ * @property {ForbiddenException} ForbiddenException - Constructor
+ * @property {NotFoundException} NotFoundException - Constructor
+ * @property {ValidationException} ValidationException - Constructor
  *
  * @property {ContainerInterface} ContainerInterface - Interface
  * @property {ListenerInterface} ListenerInterface - Interface
@@ -48,7 +53,12 @@ let must = null
  *   ContainerInterface: ContainerInterface,
  *   ResourceNotFoundException: ResourceNotFoundException,
  *   LoggerInterface: LoggerInterface,
- *   ContainerRegistration: ContainerRegistration
+ *   ContainerRegistration: ContainerRegistration,
+ *   BadRequestException: BadRequestException,
+ *   UnauthorizedException: UnauthorizedException,
+ *   ForbiddenException: ForbiddenException,
+ *   NotFoundException: NotFoundException,
+ *   ValidationException: ValidationException
  * }}
  */
 const toweran = {
@@ -94,6 +104,46 @@ const toweran = {
    */
   get ResourceNotFoundException() {
     return require(FRAMEWORK_PATH + '/lib/exceptions/ResourceNotFoundException')
+  },
+
+  /**
+   * @return {BadRequestException}
+   * @constructor
+   */
+  get BadRequestException() {
+    return require(FRAMEWORK_PATH + '/lib/exception/BadRequestException')
+  },
+
+  /**
+   * @return {UnauthorizedException}
+   * @constructor
+   */
+  get UnauthorizedException() {
+    return require(FRAMEWORK_PATH + '/lib/exception/UnauthorizedException')
+  },
+
+  /**
+   * @return {ForbiddenException}
+   * @constructor
+   */
+  get ForbiddenException() {
+    return require(FRAMEWORK_PATH + '/lib/exception/ForbiddenException')
+  },
+
+  /**
+   * @return {NotFoundException}
+   * @constructor
+   */
+  get NotFoundException() {
+    return require(FRAMEWORK_PATH + '/lib/exception/NotFoundException')
+  },
+
+  /**
+   * @return {ValidationException}
+   * @constructor
+   */
+  get ValidationException() {
+    return require(FRAMEWORK_PATH + '/lib/exception/ValidationException')
   },
 
   /*
@@ -211,6 +261,7 @@ const toweran = {
   get HttpServiceProvider() {
     return require(FRAMEWORK_PATH + '/lib/serviceProviders/HttpServiceProvider')
   },
+
 
   /**
    * @return {App}
