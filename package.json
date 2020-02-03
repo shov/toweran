@@ -5,7 +5,8 @@
   "main": "toweran.js",
   "scripts": {
     "test": "jest --runInBand",
-    "boilerplate": "node boilerplate/index.js"
+    "boilerplate": "node boilerplate/index.js",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "chalk": "^2.4.2",
     "check-types": "^10.1.1",
     "dotenv": "^8.2.0",
+    "escape-string-regexp": "^2.0.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.4",
     "rimraf": "^3.0.0",
@@ -49,6 +51,8 @@
     "node": ">=10.7.0"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.8.0",
     "jest": "^24.9.0"
   }
 }
