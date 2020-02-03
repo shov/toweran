@@ -1,7 +1,7 @@
 'use strict'
 
 require('../../../bootstrap')
-const { sep } = require('path'); // system path separator
+const { sep } = require('path') // system path separator
 
 describe(`Dependency Injector pattern cutting`, () => {
   const DependencyInjectorOrigin = require(toweran.FRAMEWORK_PATH + '/lib/DependencyInjector')
