@@ -9,7 +9,8 @@ module.exports = {
    * Application level service providers, must be {BasicServiceProvider} child classes (constructors)
    */
   serviceProviders: [
-    //Core service providers
+    // Core service providers
+    toweran.ConfigServiceProvider,
     toweran.HelperServiceProvider,
     toweran.DependencyInjectionServiceProvider,
 
