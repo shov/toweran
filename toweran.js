@@ -1,7 +1,6 @@
 'use strict'
 
 //TODO: Global NS, contracts, exceptions, must. Make sure everything is here and remove the todo
-//TODO: make PATH constants immutable if not testing env
 
 const FRAMEWORK_PATH = __dirname
 let must = null
