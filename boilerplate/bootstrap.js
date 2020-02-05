@@ -1,9 +1,11 @@
 'use strict'
 
 const path = require('path')
-require('../toweran')
 
+global.toweran = require('../toweran')
 toweran.APP_PATH = __dirname
+Object.freeze(toweran)
+
 
 /**
  * DotEnv config
