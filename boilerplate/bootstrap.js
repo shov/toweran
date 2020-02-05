@@ -4,8 +4,10 @@ const path = require('path')
 
 global.toweran = require('../toweran')
 toweran.APP_PATH = __dirname
-Object.freeze(toweran)
 
+if (process.env.env !== 'testing') {
+  Object.freeze(toweran)
+}
 
 /**
  * DotEnv config
