@@ -22,6 +22,14 @@ const MockedListener = class extends ListenerInterface {
   }
 }
 
+const closureListener = (payload) => {
+  payload.called = true
+}
+
+const asyncClosureListener = async (payload) => {
+  payload.called = true
+}
+
 /**
  * This is a sample payload
  * @type {{Object}}
@@ -209,5 +217,42 @@ describe(`Event Manager unit tests`, () => {
     eventManager.dispatch('eventName')
 
     expect(state).toEqual(true)
+  })
+
+  it('closure listener from config', () => {
+    const eventManager = new EventManager({
+      events: {events: [{event: 'eventName', listeners: [closureListener]}]}
+    })
+
+    eventManager.init()
+
+    const state = {called: false}
+    eventManager.dispatch('eventName', state)
+
+    expect(state.called).toEqual(true)
+  })
+
+  it('closure listener from subscription', () => {
+    const eventManager = new EventManager({})
+
+    eventManager.init()
+    eventManager.subscribe('eventName', closureListener)
+
+    const state = {called: false}
+    eventManager.dispatch('eventName', state)
+
+    expect(state.called).toEqual(true)
+  })
+
+  it('async closure listener from subscription', async () => {
+    const eventManager = new EventManager({})
+
+    eventManager.init()
+    eventManager.subscribe('eventName', asyncClosureListener)
+
+    const state = {called: false}
+    await eventManager.dispatch('eventName', state)
+
+    expect(state.called).toEqual(true)
   })
 })
