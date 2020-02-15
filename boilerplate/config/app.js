@@ -11,8 +11,8 @@ module.exports = {
   serviceProviders: [
     //Core service providers
     toweran.HelperServiceProvider,
-    toweran.HttpServiceProvider,
     toweran.DependencyInjectionServiceProvider,
+    toweran.HTTPServiceProvider,
 
     //App service providers
   ],

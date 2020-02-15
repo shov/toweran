@@ -85,7 +85,7 @@ describe(`Load ES6 Classes, Dot notation`, () => {
         }
 
         di = new (require(toweran.FRAMEWORK_PATH + '/lib/DependencyInjector'))(
-          logger, container, config, scriptLoader, annotationInspector
+          logger, config, container, scriptLoader, annotationInspector
         )
 
         di.init()
