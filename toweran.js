@@ -26,6 +26,7 @@ let must = null
  * @property {LoggerInterface} LoggerInterface - Interface
  *
  * @property {BasicServiceProvider} BasicServiceProvider - Constructor
+ * @property {BasicController} BasicController - Constructor
  *
  * @property {HelperServiceProvider} HelperServiceProvider - Constructor
  * @property {ConfigReader} ConfigReader - Constructor
@@ -188,6 +189,14 @@ const toweran = {
    */
   get BasicServiceProvider() {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicServiceProvider')
+  },
+
+  /**
+   * @return {BasicController}
+   * @constructor
+   */
+  get BasicController() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicController')
   },
 
   /*
