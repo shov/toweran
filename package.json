@@ -4,7 +4,7 @@
   "description": "pure Javascript OO backend framework (nodejs)",
   "main": "toweran.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "jest -i --forceExit",
     "boilerplate": "node boilerplate/index.js"
   },
   "repository": {
@@ -38,10 +38,12 @@
   },
   "jest": {
     "testRegex": ".*Test.js$",
-    "testPathDirs": ["tests"]
+    "testPathDirs": [
+      "tests"
+    ]
   },
   "engines": {
-    "node": ">=10.7.0"
+    "node": ">=12.16.2"
   },
   "devDependencies": {
     "jest": "^24.9.0"
