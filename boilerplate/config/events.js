@@ -1,34 +1,27 @@
 module.exports = {
   /**
-   * A collection of events & associated listeners
+   * Events and listeners predefined relations, do not recommend to use
+   * better use Events instead and subscribe on them with Listeners / callbacks
+   * in the boot section of AppEventServiceProvider (you can create it on your own)
+   *
+   * Example of an entry:
+   * {
+   *   event: 'time_to_sleep',
+   *   listeners: [
+   *     new (require(APP_PATH + '/app/listeners/SleepTimeListener')),
+   *     async () => {
+   *       const logger = app.get('logger')
+   *       for(let i = 1; i <= 2989; i++) {
+   *         await new Promise(r => setInterval(() => {
+   *           logger.log(`${i} sheep${i > 1 ? 's' : ''}`)
+   *           r()
+   *         }, 1000)
+   *       }
+   *     },
+   *     () => { app.get('logger').log('Good Night!'); }
+   *   ],
+   *
+   * }
    */
-  events: [
-    /**
-     * TODO:
-     *  1. I don't like this structure. It can be easier
-     *  2. Also event & listeners keys are redundant. we can skip them as we got a better idea
-     */
-    {
-      event: 'sample_event_name',
-      listeners: [
-        // TODO: and it would be great if we have a possibility to use callbacks here
-        // new (require('../listeners/SampleAsyncListener'))
-        // new (require('../listeners/SamplePromiseListener'))
-        // new (require('../listeners/SampleNormalListener'))
-      ]
-    },
-    {
-      event: 'start_application',
-      listeners: [
-        new (require('../listeners/AppStartedListener')),
-        // 'listeners.AppStartedListener' => not implemented yet
-      ],
-    },
-    {
-      event: 'after_application_started',
-      listeners: [
-        new (require('../listeners/AfterAppStartedListener')),
-      ],
-    },
-  ],
+  events: [],
 }

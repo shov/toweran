@@ -152,7 +152,7 @@ function createProject(targetPath = '') {
         packageJsonContent.scripts = {}
       }
 
-      packageJsonContent.scripts.test = "jest --runInBand"
+      packageJsonContent.scripts.test = "jest -i --forceExit"
 
       //Push dependencies manually for ci test environment
       if (this.opts.ciFixtures) {

@@ -27,12 +27,14 @@ let must = null
  *
  * @property {BasicServiceProvider} BasicServiceProvider - Constructor
  * @property {BasicController} BasicController - Constructor
+ * @property {BasicEvent} BasicEvent - Constructor
  *
  * @property {HelperServiceProvider} HelperServiceProvider - Constructor
  * @property {ConfigReader} ConfigReader - Constructor
  * @property {DependencyInjectionServiceProvider} DependencyInjectionServiceProvider - Constructor
  * @property {Logger} Logger - Constructor
  * @property {EventServiceProvider} EventServiceProvider - Constructor
+ * @property {HttpServiceProvider} HttpServiceProvider - Constructor
  * @property {Container} Container - Constructor
  * @property {ContainerRegistration} ContainerRegistration - Constructor
  *
@@ -59,7 +61,9 @@ let must = null
  *   UnauthorizedException: UnauthorizedException,
  *   ForbiddenException: ForbiddenException,
  *   NotFoundException: NotFoundException,
- *   ValidationException: ValidationException
+ *   ValidationException: ValidationException,
+ *   BasicEvent: BasicEvent,
+ *   HttpServiceProvider: HttpServiceProvider,
  * }}
  */
 const toweran = {
@@ -197,6 +201,14 @@ const toweran = {
    */
   get BasicController() {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicController')
+  },
+
+  /**
+   * @return {BasicEvent}
+   * @constructor
+   */
+  get BasicEvent() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicEvent')
   },
 
   /*

@@ -12,6 +12,7 @@ module.exports = {
     //Core service providers
     toweran.HelperServiceProvider,
     toweran.DependencyInjectionServiceProvider,
+    toweran.EventServiceProvider,
     toweran.HTTPServiceProvider,
 
     //App service providers
@@ -31,12 +32,22 @@ module.exports = {
       base: `app.domain`,
     },
 
+    /** Events */
+    {
+      path: {
+        include: `${toweran.APP_PATH}/events/*Event.js`,
+      },
+      strategy: toweran.C.DI.DOT_NOTATION,
+      base: `app.events`,
+    },
+
     /** Listeners */
     {
       path: {
         include: `${toweran.APP_PATH}/listeners/*Listener.js`,
       },
       strategy: toweran.C.DI.DOT_NOTATION,
+      base: `app.listeners`,
     },
 
     /** HTTP */
