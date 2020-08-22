@@ -34,7 +34,7 @@ let must = null
  * @property {DependencyInjectionServiceProvider} DependencyInjectionServiceProvider - Constructor
  * @property {Logger} Logger - Constructor
  * @property {EventServiceProvider} EventServiceProvider - Constructor
- * @property {HttpServiceProvider} HttpServiceProvider - Constructor
+ * @property {HTTPServiceProvider} HTTPServiceProvider - Constructor
  * @property {Container} Container - Constructor
  * @property {ContainerRegistration} ContainerRegistration - Constructor
  *
@@ -63,7 +63,7 @@ let must = null
  *   NotFoundException: NotFoundException,
  *   ValidationException: ValidationException,
  *   BasicEvent: BasicEvent,
- *   HttpServiceProvider: HttpServiceProvider,
+ *   HTTPServiceProvider: HTTPServiceProvider,
  * }}
  */
 const toweran = {
@@ -116,7 +116,7 @@ const toweran = {
    * @constructor
    */
   get BadRequestException() {
-    return require(FRAMEWORK_PATH + '/lib/exception/BadRequestException')
+    return require(FRAMEWORK_PATH + '/lib/exceptions/BadRequestException')
   },
 
   /**
@@ -124,7 +124,7 @@ const toweran = {
    * @constructor
    */
   get UnauthorizedException() {
-    return require(FRAMEWORK_PATH + '/lib/exception/UnauthorizedException')
+    return require(FRAMEWORK_PATH + '/lib/exceptions/UnauthorizedException')
   },
 
   /**
@@ -132,7 +132,7 @@ const toweran = {
    * @constructor
    */
   get ForbiddenException() {
-    return require(FRAMEWORK_PATH + '/lib/exception/ForbiddenException')
+    return require(FRAMEWORK_PATH + '/lib/exceptions/ForbiddenException')
   },
 
   /**
@@ -140,7 +140,7 @@ const toweran = {
    * @constructor
    */
   get NotFoundException() {
-    return require(FRAMEWORK_PATH + '/lib/exception/NotFoundException')
+    return require(FRAMEWORK_PATH + '/lib/exceptions/NotFoundException')
   },
 
   /**
@@ -148,7 +148,7 @@ const toweran = {
    * @constructor
    */
   get ValidationException() {
-    return require(FRAMEWORK_PATH + '/lib/exception/ValidationException')
+    return require(FRAMEWORK_PATH + '/lib/exceptions/ValidationException')
   },
 
   /*
@@ -276,11 +276,11 @@ const toweran = {
   },
 
   /**
-   * @return {HttpServiceProvider}
+   * @return {HTTPServiceProvider}
    * @constructor
    */
-  get HttpServiceProvider() {
-    return require(FRAMEWORK_PATH + '/lib/serviceProviders/HttpServiceProvider')
+  get HTTPServiceProvider() {
+    return require(FRAMEWORK_PATH + '/lib/serviceProviders/HTTPServiceProvider')
   },
 
 

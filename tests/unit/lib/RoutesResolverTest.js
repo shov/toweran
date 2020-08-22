@@ -163,12 +163,29 @@ describe(`Test routers loading`, () => {
     }).toThrow(InvalidArgumentException)
   })
 
-  it(`No path`, () => {
+  it(`No path no sub, positive`, () => {
     const definitions = [
       {
-        method: 'get',
+        method: 'use',
         resolver: (req, res, next) => {
         },
+      },
+    ]
+
+    const expected = [
+      {path: null, method: 'use', validCb: true},
+    ]
+
+    routesResolver.resolveRoutes('test', definitions)
+    const result = routesResolver.getRouter()
+
+    expect(result.registered).toStrictEqual(expected)
+  })
+
+  it(`Sun and no path`, () => {
+    const definitions = [
+      {
+        sub: []
       },
     ]
 
@@ -231,11 +248,11 @@ class RouterMock {
     this.registered = []
   }
 
-  register(method, path, cb) {
+  register(method, a, b) {
     this.registered.push({
       method,
-      path,
-      validCb: check.function(cb)
+      path: b ? a : null,
+      validCb: check.function(b ? b : a)
     })
   }
 }
