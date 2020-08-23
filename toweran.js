@@ -37,6 +37,7 @@ let must = null
  * @property {HTTPServiceProvider} HTTPServiceProvider - Constructor
  * @property {Container} Container - Constructor
  * @property {ContainerRegistration} ContainerRegistration - Constructor
+ * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
@@ -64,6 +65,7 @@ let must = null
  *   ValidationException: ValidationException,
  *   BasicEvent: BasicEvent,
  *   HTTPServiceProvider: HTTPServiceProvider,
+ *   ProxyfiedAccessor: ProxyfiedAccessor,
  * }}
  */
 const toweran = {
@@ -245,6 +247,18 @@ const toweran = {
    */
   get ConfigReader() {
     return require(FRAMEWORK_PATH + '/lib/ConfigReader')
+  },
+
+  /*
+   * Gears
+   */
+
+  /**
+   * @returns {ProxyfiedAccessor}
+   * @constructor
+   */
+  get ProxyfiedAccessor() {
+    return require(FRAMEWORK_PATH + '/lib/ProxyfiedAccessor')
   },
 
   /*
