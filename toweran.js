@@ -38,6 +38,7 @@ let must = null
  * @property {Container} Container - Constructor
  * @property {ContainerRegistration} ContainerRegistration - Constructor
  * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
+ * @property {ConfigManager} ConfigManager - Constructor
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
@@ -66,6 +67,7 @@ let must = null
  *   BasicEvent: BasicEvent,
  *   HTTPServiceProvider: HTTPServiceProvider,
  *   ProxyfiedAccessor: ProxyfiedAccessor,
+ *   ConfigManager: ConfigManager,
  * }}
  */
 const toweran = {
@@ -247,6 +249,14 @@ const toweran = {
    */
   get ConfigReader() {
     return require(FRAMEWORK_PATH + '/lib/ConfigReader')
+  },
+
+  /**
+   * @return {ConfigManager}
+   * @constructor
+   */
+  get ConfigManager() {
+    return require(FRAMEWORK_PATH + '/lib/ConfigManager')
   },
 
   /*

@@ -7,9 +7,15 @@ const check = require('check-types')
 const rimraf = require('rimraf')
 const path = require('path')
 
-const must = toweran.must
-
-const Logger = toweran.Logger
+const {
+  TEST_PATH,
+  FRAMEWORK_PATH,
+  C,
+  Container,
+  must,
+  Logger,
+  ConfigManager
+} = toweran
 
 describe(`Load ES6 Classes, Dot notation`, () => {
 
@@ -33,30 +39,24 @@ describe(`Load ES6 Classes, Dot notation`, () => {
    */
   let di
 
-  /**
-   * @type {{app:{di:[]}}}
-   */
-  let config
-
   beforeAll(() => {
-    logger = new Logger(toweran.TEST_PATH + '/data/logs', 'framework_testing')
+    logger = new Logger(TEST_PATH + '/data/logs', 'framework_testing')
 
-    annotationInspector = new (require(toweran.FRAMEWORK_PATH + '/lib/AnnotationInspector'))(
+    annotationInspector = new (require(FRAMEWORK_PATH + '/lib/AnnotationInspector'))(
       logger
     )
 
-    scriptLoader = new (require(toweran.FRAMEWORK_PATH + '/lib/ScriptLoader'))(
+    scriptLoader = new (require(FRAMEWORK_PATH + '/lib/ScriptLoader'))(
       logger
     )
 
     //redefine app path
-    toweran.APP_PATH = path.resolve(toweran.TEST_PATH + '/data/appRootDITesting')
+    toweran.APP_PATH = path.resolve(TEST_PATH + '/data/appRootDITesting')
     fs.ensureDirSync(toweran.APP_PATH, 0o2775)
-
   })
 
   beforeEach(() => {
-    container = new (toweran.Container)()
+    container = new (Container)()
 
     //to use in the tests
     container.instance('logger', logger)
@@ -78,13 +78,13 @@ describe(`Load ES6 Classes, Dot notation`, () => {
 
         createClasses(set.classes)
 
-        const config = {
+        const config = new ConfigManager({
           app: {
             di: set.di
           }
-        }
+        }).freeze().getAccessor()
 
-        di = new (require(toweran.FRAMEWORK_PATH + '/lib/DependencyInjector'))(
+        di = new (require(FRAMEWORK_PATH + '/lib/DependencyInjector'))(
           logger, config, container, scriptLoader, annotationInspector
         )
 
@@ -434,16 +434,16 @@ function casesDataProvider() {
               `${toweran.APP_PATH}/5/app/listeners`,
             ],
           },
-          strategy: toweran.C.DI.DOT_NOTATION,
+          strategy: C.DI.DOT_NOTATION,
           base: 'app'
         },
         {
           path: `${toweran.APP_PATH}/5/app/http/controllers/*Controller.js`,
-          strategy: toweran.C.DI.DOT_NOTATION,
+          strategy: C.DI.DOT_NOTATION,
         },
         {
           path: `${toweran.APP_PATH}/5/app/listeners/*Listener.js`,
-          strategy: toweran.C.DI.DOT_NOTATION,
+          strategy: C.DI.DOT_NOTATION,
         },
       ],
       classes: [

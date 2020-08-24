@@ -4,18 +4,18 @@ require('../../bootstrap')
 
 const {
   FRAMEWORK_PATH,
+  ConfigManager,
 } = toweran
 
 
 const check = require('check-types')
-const ConfigReader = require(FRAMEWORK_PATH + '/lib/ConfigManager')
 
 describe(`Test config manager`, () => {
 
   testDataProvider().forEach((data, i) => {
     it(`Case ${i}`, done => {
 
-      const cm = new ConfigReader(data.rawConfig)
+      const cm = new ConfigManager(data.rawConfig)
       const config = cm.freeze().getAccessor()
 
       if (check.function(data.expectedValue) && new data.expectedValue instanceof Error) {
@@ -220,7 +220,7 @@ describe(`Test config manager`, () => {
 
   it(`Test stored functions`, done => {
 
-    const cm = new ConfigReader({
+    const cm = new ConfigManager({
       dynamic: {
         roles: () => {
           return [1,2,3]
