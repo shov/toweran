@@ -32,4 +32,14 @@ module.exports = {
       }
     }
   ],
+
+  /**
+   * Path to SSL key, it's recommended to use SSL_KEY in .env instead
+   */
+  sslPrivateKey: null,
+
+  /**
+   * Path to SSL crt, it's recommended to use SSL_CERT in .env instead
+   */
+  sslCertificate: null,
 }

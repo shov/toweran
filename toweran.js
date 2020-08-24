@@ -39,6 +39,7 @@ let must = null
  * @property {ContainerRegistration} ContainerRegistration - Constructor
  * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
  * @property {ConfigManager} ConfigManager - Constructor
+ * @property {ConfigAccessor} ConfigAccessor - Constructor
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
@@ -68,6 +69,7 @@ let must = null
  *   HTTPServiceProvider: HTTPServiceProvider,
  *   ProxyfiedAccessor: ProxyfiedAccessor,
  *   ConfigManager: ConfigManager,
+ *   ConfigAccessor: ConfigAccessor,
  * }}
  */
 const toweran = {
@@ -268,6 +270,20 @@ const toweran = {
    * @constructor
    */
   get ProxyfiedAccessor() {
+    return require(FRAMEWORK_PATH + '/lib/ProxyfiedAccessor')
+  },
+
+  /*
+   * Aliases
+   */
+
+  /**
+   * @typedef {ProxyfiedAccessor} ConfigAccessor
+   *
+   * @returns {ConfigAccessor}
+   * @constructor
+   */
+  get ConfigAccessor() {
     return require(FRAMEWORK_PATH + '/lib/ProxyfiedAccessor')
   },
 
