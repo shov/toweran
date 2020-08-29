@@ -144,8 +144,8 @@ function createProject(targetPath = '') {
       let packageJsonContent = fs.readFileSync(`${projectDir}/package.json`, 'utf-8')
       packageJsonContent = JSON.parse(packageJsonContent)
       packageJsonContent.jest = {
-          "testRegex": ".*Test.js$",
-          "roots": ["tests"]
+        "testRegex": ".*Test.js$",
+        "roots": ["tests"]
       }
 
       if (!packageJsonContent.scripts) {
@@ -153,6 +153,7 @@ function createProject(targetPath = '') {
       }
 
       packageJsonContent.scripts.test = "jest -i --forceExit"
+      packageJsonContent.scripts.start = "node index.js"
 
       //Push dependencies manually for ci test environment
       if (this.opts.ciFixtures) {

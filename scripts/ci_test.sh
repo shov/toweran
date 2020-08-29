@@ -27,7 +27,7 @@ TOWERAN_BOILERPLATE_TEST=0
 mkdir test_project \
     && cd test_project \
     && npm init -y \
-    && node ${SCRIPT_PATH}/toweran.js create-project . --ci-fixtures \
+    && node "${SCRIPT_PATH}/toweran.js" create-project . --ci-fixtures \
     && npm i \
     && npm test \
     && TOWERAN_BOILERPLATE_TEST=1

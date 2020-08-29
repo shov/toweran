@@ -20,12 +20,12 @@ require('dotenv').config({
  * A directory where the logs are going to be stored
  * @type {string}
  */
-const logsDir = path.resolve(toweran.APP_PATH + '/logs')
+const logsDir = path.resolve(process.env.LOGS_ABS_PATH || `${toweran.APP_PATH}${process.env.LOGS_PATH || '/logs'}`)
 
 /**
  * @type {LoggerInterface}
  */
-const logger = new toweran.Logger(logsDir)
+const logger = new toweran.Logger(logsDir, process.env.THREAD_NAME)
 
 /**
  * @type {App}

@@ -12,7 +12,7 @@ TOWERAN
 
 # Overview
 
-Toweran is an attempt to provide Nodejs backend community with an easy to use and powerful kit of tools. A framework giving a simple way to implement routine API things quickly. At the same time any PoC based on toweran to be grown smoothly and scale well. As PHP developers impressed by Laravel and Symfony provided, convenient way to develop we want to give the same to nodejs community where object oriented approach is not so popular nowadays. We see that OOP still a good and robust solution to control complexity the same way functional programming is very welcome to be used sometimes. Leverage OOP, leverage FP, keep consistence, be happy 🙂   
+Toweran is an attempt to provide Nodejs backend community with an easy to use and powerful kit of tools, a framework giving a simple way to implement routine API things quickly. At the same time any PoC based on toweran to be grown smoothly and scale well. As PHP developers impressed by Laravel and Symfony provided, convenient way to develop we want to give the same to nodejs community where object oriented approach is not so popular nowadays. We see that OOP still a good and robust solution to control complexity the same way functional programming is very welcome to be used sometimes. Leverage OOP, leverage FP, keep consistence, be happy 🙂   
 
 # Goals
 

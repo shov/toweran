@@ -2,7 +2,6 @@
 
 /**
  * Application configuration
- * TODO: implement environment pattern everywhere
  */
 module.exports = {
   /**
@@ -35,7 +34,7 @@ module.exports = {
     /** Events */
     {
       path: {
-        include: `${toweran.APP_PATH}/events/*Event.js`,
+        include: `${toweran.APP_PATH}/app/events/*Event.js`,
       },
       strategy: toweran.C.DI.DOT_NOTATION,
       base: `app.events`,
@@ -44,7 +43,7 @@ module.exports = {
     /** Listeners */
     {
       path: {
-        include: `${toweran.APP_PATH}/listeners/*Listener.js`,
+        include: `${toweran.APP_PATH}/app/listeners/*Listener.js`,
       },
       strategy: toweran.C.DI.DOT_NOTATION,
       base: `app.listeners`,
@@ -73,7 +72,7 @@ module.exports = {
   /**
    * A way to temporary disable the jobs
    */
-  disableJobs: false,
+  disableJobs: process.env.APP_DISABLE_JOBS ? 'true' === process.env.APP_DISABLE_JOBS : false,
 
   /**
    * Tasks
@@ -83,5 +82,5 @@ module.exports = {
   /**
    * A way to temporary disable the the tasks
    */
-  disableTasks: false,
+  disableTasks: process.env.APP_DISABLE_TASKS ? 'true' === process.env.APP_DISABLE_TASKS : false,
 }

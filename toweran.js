@@ -1,7 +1,5 @@
 'use strict'
 
-//TODO: Global NS, contracts, exceptions, must. Make sure everything is here and remove the todo
-
 const FRAMEWORK_PATH = __dirname
 let must = null
 

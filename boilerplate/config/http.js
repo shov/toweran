@@ -34,12 +34,22 @@ module.exports = {
   ],
 
   /**
-   * Path to SSL key, it's recommended to use SSL_KEY in .env instead
+   * HTTP accessor port
    */
-  sslPrivateKey: null,
+  port: process.env.PORT || 3000,
 
   /**
-   * Path to SSL crt, it's recommended to use SSL_CERT in .env instead
+   * Start HTTP accessor with SSL (HTTPS)
    */
-  sslCertificate: null,
+  ssl: process.env.HTTP_SSL ? 'true' === process.env.HTTP_SSL : false,
+
+  /**
+   * Path to SSL key
+   */
+  sslPrivateKey: process.env.HTTP_SSL_KEY || null,
+
+  /**
+   * Path to SSL crt
+   */
+  sslCertificate: process.env.HTTP_SSL_CERT || null,
 }
