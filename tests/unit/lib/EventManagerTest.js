@@ -1,8 +1,14 @@
 'use strict'
 
 require('../../bootstrap')
-const EventManager = require(toweran.FRAMEWORK_PATH + '/lib/EventManager')
-const ListenerInterface = toweran.ListenerInterface
+const {
+  FRAMEWORK_PATH,
+  ListenerInterface,
+  InvalidArgumentException,
+  ConfigManager,
+} = toweran
+
+const EventManager = require(FRAMEWORK_PATH + '/lib/EventManager')
 
 let listenerCalled = false
 let listenerPayload = {}
@@ -39,11 +45,17 @@ const mockedPayload = {
   email: 'test@test.com',
 }
 
+const oneEventConfig = new ConfigManager({
+  events: {
+    events: [{event: 'eventName', listeners: []}]
+  }
+}).freeze().getAccessor()
+
+const emptyConfig = new ConfigManager({}).freeze().getAccessor()
+
 /*------------------------------------------------------*/
 
 describe(`Event Manager unit tests`, () => {
-
-  const InvalidArgumentException = toweran.InvalidArgumentException
 
   it(`should not created without passing config object`, () => {
     const act = () => {
@@ -55,16 +67,14 @@ describe(`Event Manager unit tests`, () => {
 
   it(`should not created without config file`, () => {
     const act = () => {
-      const eventManager = new EventManager({})
+      const eventManager = new EventManager(emptyConfig)
     }
 
     expect(act).not.toThrow(InvalidArgumentException)
   })
 
   it(`exists method should return true if event exists`, () => {
-    const eventManager = new EventManager({
-      events: {events: [{event: 'eventName', listeners: []}]}
-    })
+    const eventManager = new EventManager(oneEventConfig)
 
     eventManager.init()
 
@@ -74,9 +84,7 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it(`exists method should return false if event not exists`, () => {
-    const eventManager = new EventManager({
-      events: {events: [{event: 'eventName', listeners: []}]}
-    })
+    const eventManager = new EventManager(oneEventConfig)
 
     eventManager.init()
 
@@ -86,9 +94,7 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it(`should not be able to run before init`, async () => {
-    const eventManager = new EventManager({
-      events: {events: [{event: 'eventName', listeners: []}]}
-    })
+    const eventManager = new EventManager(oneEventConfig)
 
     try {
       await eventManager.dispatch('eventName')
@@ -99,9 +105,7 @@ describe(`Event Manager unit tests`, () => {
 
   it(`should be functional after initialization`, () => {
     const act = () => {
-      const eventManager = new EventManager({
-        events: {events: [{event: 'eventName', listeners: []}]}
-      })
+      const eventManager = new EventManager(oneEventConfig)
 
       eventManager.init()
 
@@ -113,7 +117,7 @@ describe(`Event Manager unit tests`, () => {
 
   it(`dispatch method can accept any payload`, () => {
     const act = () => {
-      const eventManager = new EventManager({})
+      const eventManager = new EventManager(emptyConfig)
 
       eventManager.init()
 
@@ -128,9 +132,7 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it('listeners should be called if an event dispatched', () => {
-    const eventManager = new EventManager({
-      events: {events: [{event: 'eventName', listeners: [new MockedListener]}]}
-    })
+    const eventManager = new EventManager(mockedListenerConfig)
 
     eventManager.init()
 
@@ -139,10 +141,12 @@ describe(`Event Manager unit tests`, () => {
     expect(listenerCalled).toBe(true)
   })
 
+  const mockedListenerConfig = new ConfigManager({
+    events: {events: [{event: 'eventName', listeners: [new MockedListener]}]}
+  }).freeze().getAccessor()
+
   it('listeners should be able accept optional payloads', () => {
-    const eventManager = new EventManager({
-      events: {events: [{event: 'eventName', listeners: [new MockedListener]}]}
-    })
+    const eventManager = new EventManager(mockedListenerConfig)
 
     eventManager.init()
 
@@ -166,9 +170,11 @@ describe(`Event Manager unit tests`, () => {
       }
     }
 
-    const eventManager = new EventManager({
+    const config = new ConfigManager({
       events: {events: [{event: 'eventName', listeners: [new mockedPromiseListener()]}]}
-    })
+    }).freeze().getAccessor()
+
+    const eventManager = new EventManager(config)
 
     eventManager.init()
 
@@ -187,9 +193,11 @@ describe(`Event Manager unit tests`, () => {
       }
     }
 
-    const eventManager = new EventManager({
+    const config = new ConfigManager({
       events: {events: [{event: 'eventName', listeners: [new mockedAsyncListener()]}]}
-    })
+    }).freeze().getAccessor()
+
+    const eventManager = new EventManager(config)
 
     eventManager.init()
 
@@ -208,9 +216,11 @@ describe(`Event Manager unit tests`, () => {
       }
     }
 
-    const eventManager = new EventManager({
+    const config = new ConfigManager({
       events: {events: [{event: 'eventName', listeners: [new mockedNonPromiseListener()]}]}
-    })
+    }).freeze().getAccessor()
+
+    const eventManager = new EventManager(config)
 
     eventManager.init()
 
@@ -220,9 +230,11 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it('closure listener from config', () => {
-    const eventManager = new EventManager({
+    const config = new ConfigManager({
       events: {events: [{event: 'eventName', listeners: [closureListener]}]}
-    })
+    }).freeze().getAccessor()
+
+    const eventManager = new EventManager(config)
 
     eventManager.init()
 
@@ -233,7 +245,7 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it('closure listener from subscription', () => {
-    const eventManager = new EventManager({})
+    const eventManager = new EventManager(emptyConfig)
 
     eventManager.init()
     eventManager.subscribe('eventName', closureListener)
@@ -245,7 +257,7 @@ describe(`Event Manager unit tests`, () => {
   })
 
   it('async closure listener from subscription', async () => {
-    const eventManager = new EventManager({})
+    const eventManager = new EventManager(emptyConfig)
 
     eventManager.init()
     eventManager.subscribe('eventName', asyncClosureListener)

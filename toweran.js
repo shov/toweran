@@ -37,6 +37,9 @@ let must = null
  * @property {HTTPServiceProvider} HTTPServiceProvider - Constructor
  * @property {Container} Container - Constructor
  * @property {ContainerRegistration} ContainerRegistration - Constructor
+ * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
+ * @property {ConfigManager} ConfigManager - Constructor
+ * @property {ConfigAccessor} ConfigAccessor - Constructor
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
@@ -64,6 +67,9 @@ let must = null
  *   ValidationException: ValidationException,
  *   BasicEvent: BasicEvent,
  *   HTTPServiceProvider: HTTPServiceProvider,
+ *   ProxyfiedAccessor: ProxyfiedAccessor,
+ *   ConfigManager: ConfigManager,
+ *   ConfigAccessor: ConfigAccessor,
  * }}
  */
 const toweran = {
@@ -245,6 +251,40 @@ const toweran = {
    */
   get ConfigReader() {
     return require(FRAMEWORK_PATH + '/lib/ConfigReader')
+  },
+
+  /**
+   * @return {ConfigManager}
+   * @constructor
+   */
+  get ConfigManager() {
+    return require(FRAMEWORK_PATH + '/lib/ConfigManager')
+  },
+
+  /*
+   * Gears
+   */
+
+  /**
+   * @returns {ProxyfiedAccessor}
+   * @constructor
+   */
+  get ProxyfiedAccessor() {
+    return require(FRAMEWORK_PATH + '/lib/ProxyfiedAccessor')
+  },
+
+  /*
+   * Aliases
+   */
+
+  /**
+   * @typedef {ProxyfiedAccessor} ConfigAccessor
+   *
+   * @returns {ConfigAccessor}
+   * @constructor
+   */
+  get ConfigAccessor() {
+    return require(FRAMEWORK_PATH + '/lib/ProxyfiedAccessor')
   },
 
   /*
