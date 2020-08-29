@@ -1,15 +1,27 @@
 module.exports = {
   /**
-   * A collection of events & associated listeners
+   * Events and listeners predefined relations, do not recommend to use
+   * better use Events instead and subscribe on them with Listeners / callbacks
+   * in the boot section of AppEventServiceProvider (you can create it on your own)
+   *
+   * Example of an entry:
+   * {
+   *   event: 'time_to_sleep',
+   *   listeners: [
+   *     new (require(APP_PATH + '/app/listeners/SleepTimeListener')),
+   *     async () => {
+   *       const logger = app.get('logger')
+   *       for(let i = 1; i <= 2989; i++) {
+   *         await new Promise(r => setInterval(() => {
+   *           logger.log(`${i} sheep${i > 1 ? 's' : ''}`)
+   *           r()
+   *         }, 1000)
+   *       }
+   *     },
+   *     () => { app.get('logger').log('Good Night!'); }
+   *   ],
+   *
+   * }
    */
-  events: [
-    {
-      event: 'start_application',
-      listeners: [
-        //TODO: probably we better set dot notation hee and use container?
-        //TODO: and it would be great if we have a possibility to use callbacks here
-        // new (require('../listeners/SampleListener'))
-      ],
-    },
-  ],
+  events: [],
 }

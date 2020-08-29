@@ -38,9 +38,9 @@ describe(`App configuration test`, () => {
 
     const config = app.get('config')
 
-    expect(typeof config).toBe('object')
+    expect(typeof config()).toBe('object')
 
-    expect(config).toStrictEqual({
+    expect(config()).toStrictEqual({
       app: {things: []},
       events: {events: []},
       mocked: 'mocked'

@@ -2,7 +2,9 @@ const app = require('./bootstrap')
 
 try {
   app
-    .register()
+    .register({
+      threadName: process.env.THREAD_NAME || null
+    })
     .boot()
     .start()
 } catch (e) {
