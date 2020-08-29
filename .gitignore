@@ -3,6 +3,6 @@
 /nodedock
 /laradock
 /node_modules
-/test/data
+/tests/data
 /test_project
 .DS_Store
