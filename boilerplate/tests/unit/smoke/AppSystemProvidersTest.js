@@ -32,7 +32,7 @@ describe(`App system providers`, () => {
       })
       .boot()
 
-    const smokeTestObj = app.get('smokeTestObj')
+    const smokeTestObj = toweran.app.get('smokeTestObj')
 
     expect(typeof smokeTestObj).toBe('object')
 

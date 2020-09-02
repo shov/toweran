@@ -27,6 +27,7 @@ let must = null
  * @property {BasicController} BasicController - Constructor
  * @property {BasicMiddleware} BasicMiddleware - Constructor
  * @property {BasicEvent} BasicEvent - Constructor
+ * @property {BasicFacade} BasicFacade - Constructor
  *
  * @property {HelperServiceProvider} HelperServiceProvider - Constructor
  * @property {ConfigReader} ConfigReader - Constructor
@@ -39,6 +40,8 @@ let must = null
  * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
  * @property {ConfigManager} ConfigManager - Constructor
  * @property {ConfigAccessor} ConfigAccessor - Constructor
+ * @property {AppFacade} AppFacade - Constructor
+ * @property {AppFacade} app - global app instance
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
@@ -67,10 +70,13 @@ let must = null
  *   BasicController: BasicController,
  *   BasicMiddleware: BasicMiddleware,
  *   BasicEvent: BasicEvent,
+ *   BasicFacade: BasicFacade,
  *   HTTPServiceProvider: HTTPServiceProvider,
  *   ProxyfiedAccessor: ProxyfiedAccessor,
  *   ConfigManager: ConfigManager,
  *   ConfigAccessor: ConfigAccessor,
+ *   AppFacade: AppFacade,
+ *   app: AppFacade,
  * }}
  */
 const toweran = {
@@ -226,6 +232,14 @@ const toweran = {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicEvent')
   },
 
+  /**
+   * @returns {BasicFacade}
+   * @constructor
+   */
+  get BasicFacade() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicFacade')
+  },
+
   /*
    * Core constructors
    */
@@ -332,6 +346,18 @@ const toweran = {
     return require(FRAMEWORK_PATH + '/lib/serviceProviders/HTTPServiceProvider')
   },
 
+  /*
+   * Facades
+   */
+
+  /**
+   * @returns {AppFacade}
+   * @constructor
+   */
+  get AppFacade() {
+    return require(FRAMEWORK_PATH + '/lib/facades/AppFacade')
+  },
+
 
   /**
    * @return {App}
@@ -339,6 +365,14 @@ const toweran = {
    */
   get App() {
     return require(FRAMEWORK_PATH + '/lib/App')
+  },
+
+  /**
+   * Global accessor to current app facade
+   * @returns {AppFacade}
+   */
+  get app() {
+    throw new Error(`Application has not been initialized!`)
   },
 }
 
