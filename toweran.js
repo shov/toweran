@@ -25,6 +25,7 @@ let must = null
  *
  * @property {BasicServiceProvider} BasicServiceProvider - Constructor
  * @property {BasicController} BasicController - Constructor
+ * @property {BasicMiddleware} BasicMiddleware - Constructor
  * @property {BasicEvent} BasicEvent - Constructor
  *
  * @property {HelperServiceProvider} HelperServiceProvider - Constructor
@@ -63,6 +64,8 @@ let must = null
  *   ForbiddenException: ForbiddenException,
  *   NotFoundException: NotFoundException,
  *   ValidationException: ValidationException,
+ *   BasicController: BasicController,
+ *   BasicMiddleware: BasicMiddleware,
  *   BasicEvent: BasicEvent,
  *   HTTPServiceProvider: HTTPServiceProvider,
  *   ProxyfiedAccessor: ProxyfiedAccessor,
@@ -205,6 +208,14 @@ const toweran = {
    */
   get BasicController() {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicController')
+  },
+
+  /**
+   * @return {BasicMiddleware}
+   * @constructor
+   */
+  get BasicMiddleware() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicMiddleware')
   },
 
   /**
