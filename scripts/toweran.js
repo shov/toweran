@@ -91,7 +91,7 @@ try {
  * @param {string} targetPath
  */
 function createProject(targetPath = '') {
-  //Paths
+  //TODO fix the path @url https://trello.com/c/28jFSc5x/69-support-create-project-from-and
   const projectDir = path.resolve(`${process.cwd()}/${targetPath}`)
 
   try {
@@ -155,18 +155,20 @@ function createProject(targetPath = '') {
       packageJsonContent.scripts.test = "jest -i --forceExit"
       packageJsonContent.scripts.start = "node index.js"
 
+      let modulePackageJson = fs.readFileSync(`${moduleDir}/package.json`, 'utf-8')
+      modulePackageJson = JSON.parse(modulePackageJson)
+
       //Push dependencies manually for ci test environment
       if (this.opts.ciFixtures) {
         console.info(chalk`{yellow ${symbol.i}} CI fixtures are on`)
 
-        let modulePackageJson = fs.readFileSync(`${moduleDir}/package.json`, 'utf-8')
-        modulePackageJson = JSON.parse(modulePackageJson)
-
         packageJsonContent.dependencies = modulePackageJson.dependencies
         packageJsonContent.dependencies.toweran = 'file:/..'
 
-        packageJsonContent.devDependencies = modulePackageJson.devDependencies
       }
+
+      //TODO: merge them @url https://trello.com/c/28jFSc5x/69-support-create-project-from-and
+      packageJsonContent.devDependencies = modulePackageJson.devDependencies
 
       packageJsonContent = JSON.stringify(packageJsonContent, null, 2) + '\n'
 
