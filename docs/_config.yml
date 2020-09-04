@@ -1,11 +1,12 @@
 title: Toweran
 lang: en
 description: 🏰 pure Javascript OO backend framework (nodejs)
+author: shov
 
 remote_theme: rundocs/jekyll-rtd-theme
 
 addons_branch: true
-edit: true
+edit: false
 
 addons:
 - github
