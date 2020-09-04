@@ -2,6 +2,8 @@ title: Toweran
 lang: en
 description: 🏰 pure Javascript OO backend framework (nodejs)
 
+remote_theme: rundocs/jekyll-rtd-theme
+
 addons_branch: true
 edit: true
 
