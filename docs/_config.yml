@@ -1,1 +1,56 @@
-theme: jekyll-theme-dinky
+title: Toweran
+lang: en
+description: 🏰 pure Javascript OO backend framework (nodejs)
+
+addons_branch: true
+edit: true
+
+addons:
+- github
+- i18n
+- plugins
+- analytics
+
+copyright:
+  revision: true
+  since: 2019
+
+readme_index:
+  with_frontmatter: true
+
+theme: jekyll-rtd-theme
+
+plugins:
+  - jekyll-feed
+  - jekyll-coffeescript
+  - jekyll-default-layout
+  - jekyll-gist
+  - jekyll-github-metadata
+  - jekyll-optional-front-matter
+  - jekyll-paginate
+  - jekyll-readme-index
+  - jekyll-titles-from-headings
+  - jekyll-relative-links
+  - jemoji
+  - jekyll-avatar
+  - jekyll-mentions
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
