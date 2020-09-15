@@ -29,7 +29,8 @@ try {
    * Set options
    */
   const opts = {
-    ciFixtures: false
+    ciFixtures: false,
+    skipEnv: false,
   }
 
   /**
@@ -46,6 +47,8 @@ try {
         break
 
       case /^--.+$/.test(val):
+        console.log(val)
+        console.log(`-> ${argToOption(val)}`)
         opts[argToOption(val)] = true
         break
 
@@ -117,7 +120,11 @@ function createProject(targetPath = '') {
   fs.copySync(`${moduleDir}/boilerplate/.gitignore.content`, `${projectDir}/.gitignore`)
 
   fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env-example`)
-  fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env`)
+
+  if (!this.opts.skipEnv) {
+    console.info(chalk`{yellow ${symbol.i}} skip .env`)
+    fs.copySync(`${moduleDir}/boilerplate/.env-example`, `${projectDir}/.env`)
+  }
 
   console.info(chalk`{green ${symbol.v}} The boilerplate has been copied`)
 
