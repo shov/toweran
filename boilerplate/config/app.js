@@ -27,7 +27,7 @@ module.exports = {
       path: {
         include: `${toweran.APP_PATH}/app/domain`,
       },
-      strategy: toweran.C.DI.DOT_NOTATION,
+      strategy: toweran.CONST.DI.DOT_NOTATION,
       base: `app.domain`,
     },
 
@@ -36,7 +36,7 @@ module.exports = {
       path: {
         include: `${toweran.APP_PATH}/app/events/*Event.js`,
       },
-      strategy: toweran.C.DI.DOT_NOTATION,
+      strategy: toweran.CONST.DI.DOT_NOTATION,
       base: `app.events`,
     },
 
@@ -45,7 +45,7 @@ module.exports = {
       path: {
         include: `${toweran.APP_PATH}/app/listeners/*Listener.js`,
       },
-      strategy: toweran.C.DI.DOT_NOTATION,
+      strategy: toweran.CONST.DI.DOT_NOTATION,
       base: `app.listeners`,
     },
 
@@ -54,13 +54,13 @@ module.exports = {
       path: {
         include: `${toweran.APP_PATH}/app/http/controllers/*Controller.js`,
       },
-      strategy: toweran.C.DI.DOT_NOTATION,
+      strategy: toweran.CONST.DI.DOT_NOTATION,
     },
     {
       path: {
         include: `${toweran.APP_PATH}/app/http/middleware/*Middleware.js`,
       },
-      strategy: toweran.C.DI.DOT_NOTATION,
+      strategy: toweran.CONST.DI.DOT_NOTATION,
     },
   ],
 

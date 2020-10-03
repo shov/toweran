@@ -1,6 +1,6 @@
 'use strict'
 const {
-  C
+  CONST
 } = toweran
 
 module.exports = [
@@ -13,7 +13,7 @@ module.exports = [
       const protocol = `http${process.env.HTTP_SSL === 'true' ? 's' : ''}://`
       const url = `${protocol}${req.hostname}:${process.env.PORT}/api/v1/welcome`
 
-      res.redirect(C.HTTP.MOVED_PERMANENTLY, url)
+      res.redirect(CONST.HTTP.MOVED_PERMANENTLY, url)
     },
     sub: [
       {

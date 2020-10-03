@@ -10,7 +10,7 @@ const path = require('path')
 const {
   TEST_PATH,
   FRAMEWORK_PATH,
-  C,
+  CONST,
   Container,
   must,
   Logger,
@@ -434,16 +434,16 @@ function casesDataProvider() {
               `${toweran.APP_PATH}/5/app/listeners`,
             ],
           },
-          strategy: C.DI.DOT_NOTATION,
+          strategy: CONST.DI.DOT_NOTATION,
           base: 'app'
         },
         {
           path: `${toweran.APP_PATH}/5/app/http/controllers/*Controller.js`,
-          strategy: C.DI.DOT_NOTATION,
+          strategy: CONST.DI.DOT_NOTATION,
         },
         {
           path: `${toweran.APP_PATH}/5/app/listeners/*Listener.js`,
-          strategy: C.DI.DOT_NOTATION,
+          strategy: CONST.DI.DOT_NOTATION,
         },
       ],
       classes: [
