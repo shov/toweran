@@ -96,27 +96,19 @@ try {
 function createProject(targetPath = '') {
   // Absolute path starts from / or ~ or if it's Windows from disc name like c:\
   // Relative path starts from . or .. or just from name of dir like ./subDir/subSub is equal to subDir/subSub
-  // Better than parse it let's make an assumption it's a relative,
-  // try to ensure and if we get an exception try ensure it's an absolute one.
   let projectDir
 
-  //Try relative
+  const shouldBeAbs = /^(\/|~|[a-zA-Z]:\\)/.test(targetPath)
   try {
-    projectDir = path.resolve(`${process.cwd()}/${targetPath}`)
-    fs.ensureDirSync(projectDir, 0o2775)
-  } catch (e) {
-    // The path must be a relative
-    console.info(chalk`{yellow ${symbol.i}} Given path isn't relative`)
-  }
-
-  //Try absolute
-  if(!projectDir) {
-    try {
+    if(shouldBeAbs) {
       projectDir = path.resolve(targetPath)
       fs.ensureDirSync(projectDir, 0o2775)
-    } catch (e) {
-      throw new Error(chalk`{red ${symbol.x}} Given path '${projectDir}' doesn't exist or isn't a directory!`)
+    } else {
+      projectDir = path.resolve(`${process.cwd()}/${targetPath}`)
+      fs.ensureDirSync(projectDir, 0o2775)
     }
+  } catch (e) {
+    throw new Error(chalk`{red ${symbol.x}} Given path '${projectDir}' doesn't exist or isn't a directory!`)
   }
 
   console.info(chalk`{green ${symbol.v}} The path is good-to-go: ${projectDir}`)
