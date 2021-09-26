@@ -1,6 +1,6 @@
 {
   "name": "toweran",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "pure Javascript OO backend framework (nodejs)",
   "main": "toweran.js",
   "scripts": {
@@ -29,7 +29,6 @@
   "dependencies": {
     "@types/check-types": "^7.3.1",
     "@types/express": "^4.17.2",
-    "addict-ioc": "^2.5.6",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "check-types": "^10.1.1",
