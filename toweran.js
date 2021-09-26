@@ -5,7 +5,7 @@ let must = null
 
 /**
  * @property {string} FRAMEWORK_PATH - Path to the framework root
- * @property {Object} C - Constants
+ * @property {Object} CONST - Constants
  * @property {Must} must - Object that helps to validate
  *
  * @property {App} App - The application constructor
@@ -25,7 +25,9 @@ let must = null
  *
  * @property {BasicServiceProvider} BasicServiceProvider - Constructor
  * @property {BasicController} BasicController - Constructor
+ * @property {BasicMiddleware} BasicMiddleware - Constructor
  * @property {BasicEvent} BasicEvent - Constructor
+ * @property {BasicFacade} BasicFacade - Constructor
  *
  * @property {HelperServiceProvider} HelperServiceProvider - Constructor
  * @property {ConfigReader} ConfigReader - Constructor
@@ -38,11 +40,13 @@ let must = null
  * @property {ProxyfiedAccessor} ProxyfiedAccessor - Constructor
  * @property {ConfigManager} ConfigManager - Constructor
  * @property {ConfigAccessor} ConfigAccessor - Constructor
+ * @property {AppFacade} AppFacade - Constructor
+ * @property {AppFacade} app - global app instance
  *
  * @type {{
  *   FRAMEWORK_PATH: string,
  *   App: App,
- *   C: {},
+ *   CONST: {},
  *   must: Must,
  *   HelperServiceProvider: HelperServiceProvider,
  *   ConfigReader: ConfigReader,
@@ -63,11 +67,16 @@ let must = null
  *   ForbiddenException: ForbiddenException,
  *   NotFoundException: NotFoundException,
  *   ValidationException: ValidationException,
+ *   BasicController: BasicController,
+ *   BasicMiddleware: BasicMiddleware,
  *   BasicEvent: BasicEvent,
+ *   BasicFacade: BasicFacade,
  *   HTTPServiceProvider: HTTPServiceProvider,
  *   ProxyfiedAccessor: ProxyfiedAccessor,
  *   ConfigManager: ConfigManager,
  *   ConfigAccessor: ConfigAccessor,
+ *   AppFacade: AppFacade,
+ *   app: AppFacade,
  * }}
  */
 const toweran = {
@@ -80,7 +89,7 @@ const toweran = {
   /**
    * Constants
    */
-  get C() {
+  get CONST() {
     return require(FRAMEWORK_PATH + '/lib/constants')
   },
 
@@ -208,11 +217,27 @@ const toweran = {
   },
 
   /**
+   * @return {BasicMiddleware}
+   * @constructor
+   */
+  get BasicMiddleware() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicMiddleware')
+  },
+
+  /**
    * @return {BasicEvent}
    * @constructor
    */
   get BasicEvent() {
     return require(FRAMEWORK_PATH + '/lib/contracts/BasicEvent')
+  },
+
+  /**
+   * @returns {BasicFacade}
+   * @constructor
+   */
+  get BasicFacade() {
+    return require(FRAMEWORK_PATH + '/lib/contracts/BasicFacade')
   },
 
   /*
@@ -321,6 +346,18 @@ const toweran = {
     return require(FRAMEWORK_PATH + '/lib/serviceProviders/HTTPServiceProvider')
   },
 
+  /*
+   * Facades
+   */
+
+  /**
+   * @returns {AppFacade}
+   * @constructor
+   */
+  get AppFacade() {
+    return require(FRAMEWORK_PATH + '/lib/facades/AppFacade')
+  },
+
 
   /**
    * @return {App}
@@ -328,6 +365,14 @@ const toweran = {
    */
   get App() {
     return require(FRAMEWORK_PATH + '/lib/App')
+  },
+
+  /**
+   * Global accessor to current app facade
+   * @returns {AppFacade}
+   */
+  get app() {
+    throw new Error(`Application has not been initialized!`)
   },
 }
 

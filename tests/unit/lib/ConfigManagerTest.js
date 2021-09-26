@@ -63,7 +63,7 @@ describe(`Test config manager`, () => {
                 path: {
                   include: `/x/app/domain`,
                 },
-                strategy: toweran.C.DI.DOT_NOTATION,
+                strategy: toweran.CONST.DI.DOT_NOTATION,
                 base: `app.domain`,
               },
             ],
@@ -90,7 +90,7 @@ describe(`Test config manager`, () => {
                 path: {
                   include: `/x/app/domain`,
                 },
-                strategy: toweran.C.DI.DOT_NOTATION,
+                strategy: toweran.CONST.DI.DOT_NOTATION,
                 base: `app.domain`,
               },
             ],
@@ -111,7 +111,7 @@ describe(`Test config manager`, () => {
               path: {
                 include: `/x/app/domain`,
               },
-              strategy: toweran.C.DI.DOT_NOTATION,
+              strategy: toweran.CONST.DI.DOT_NOTATION,
               base: `app.domain`,
             },
           ],
@@ -132,7 +132,7 @@ describe(`Test config manager`, () => {
                 path: {
                   include: `/x/app/domain`,
                 },
-                strategy: toweran.C.DI.DOT_NOTATION,
+                strategy: toweran.CONST.DI.DOT_NOTATION,
                 base: `app.domain`,
               },
             ],
@@ -151,7 +151,7 @@ describe(`Test config manager`, () => {
             path: {
               include: `/x/app/domain`,
             },
-            strategy: toweran.C.DI.DOT_NOTATION,
+            strategy: toweran.CONST.DI.DOT_NOTATION,
             base: `app.domain`,
           },
         ],
@@ -167,7 +167,7 @@ describe(`Test config manager`, () => {
                 path: {
                   include: `/x/app/domain`,
                 },
-                strategy: toweran.C.DI.DOT_NOTATION,
+                strategy: toweran.CONST.DI.DOT_NOTATION,
                 base: `app.domain`,
               },
             ],
@@ -196,7 +196,7 @@ describe(`Test config manager`, () => {
                 path: {
                   include: `/x/app/domain`,
                 },
-                strategy: toweran.C.DI.DOT_NOTATION,
+                strategy: toweran.CONST.DI.DOT_NOTATION,
                 base: `app.domain`,
               },
             ],

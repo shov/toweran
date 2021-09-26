@@ -36,7 +36,7 @@ describe(`App configuration test`, () => {
     fs.unlinkSync(toweran.TEST_PATH + '/data/config/app.js')
     fs.unlinkSync(toweran.TEST_PATH + '/data/config/events.js')
 
-    const config = app.get('config')
+    const config = toweran.app.get('config')
 
     expect(typeof config()).toBe('object')
 
