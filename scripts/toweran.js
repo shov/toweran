@@ -94,13 +94,21 @@ try {
  * @param {string} targetPath
  */
 function createProject(targetPath = '') {
-  //TODO fix the path @url https://trello.com/c/28jFSc5x/69-support-create-project-from-and
-  const projectDir = path.resolve(`${process.cwd()}/${targetPath}`)
+  // Absolute path starts from / or ~ or if it's Windows from disc name like c:\
+  // Relative path starts from . or .. or just from name of dir like ./subDir/subSub is equal to subDir/subSub
+  let projectDir
 
+  const shouldBeAbs = /^(\/|~|[a-zA-Z]:\\)/.test(targetPath)
   try {
-    fs.ensureDirSync(projectDir, 0o2775)
+    if(shouldBeAbs) {
+      projectDir = path.resolve(targetPath)
+      fs.ensureDirSync(projectDir, 0o2775)
+    } else {
+      projectDir = path.resolve(`${process.cwd()}/${targetPath}`)
+      fs.ensureDirSync(projectDir, 0o2775)
+    }
   } catch (e) {
-    throw new Error(chalk`{red ${symbol.x}} Given path '${projectDir}' exists and is not a directory!`)
+    throw new Error(chalk`{red ${symbol.x}} Given path '${projectDir}' doesn't exist or isn't a directory!`)
   }
 
   console.info(chalk`{green ${symbol.v}} The path is good-to-go: ${projectDir}`)
@@ -174,8 +182,11 @@ function createProject(targetPath = '') {
 
       }
 
-      //TODO: merge them @url https://trello.com/c/28jFSc5x/69-support-create-project-from-and
-      packageJsonContent.devDependencies = modulePackageJson.devDependencies
+      //Merge dev dependencies
+      if(!packageJsonContent.devDependencies) {
+        packageJsonContent.devDependencies = {}
+      }
+      packageJsonContent.devDependencies = {...packageJsonContent.devDependencies, ...modulePackageJson.devDependencies}
 
       packageJsonContent = JSON.stringify(packageJsonContent, null, 2) + '\n'
 
