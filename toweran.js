@@ -5,7 +5,7 @@ let must = null
 
 /**
  * @property {string} FRAMEWORK_PATH - Path to the framework root
- * @property {Object} C - Constants
+ * @property {Object} CONST - Constants
  * @property {Must} must - Object that helps to validate
  *
  * @property {App} App - The application constructor
@@ -46,7 +46,7 @@ let must = null
  * @type {{
  *   FRAMEWORK_PATH: string,
  *   App: App,
- *   C: {},
+ *   CONST: {},
  *   must: Must,
  *   HelperServiceProvider: HelperServiceProvider,
  *   ConfigReader: ConfigReader,
@@ -89,7 +89,7 @@ const toweran = {
   /**
    * Constants
    */
-  get C() {
+  get CONST() {
     return require(FRAMEWORK_PATH + '/lib/constants')
   },
 
