@@ -10,7 +10,7 @@ module.exports = {
    *   listeners: [
    *     new (require(APP_PATH + '/app/listeners/SleepTimeListener')),
    *     async () => {
-   *       const logger = app.get('logger')
+   *       const logger = toweran.app.get('logger')
    *       for(let i = 1; i <= 2989; i++) {
    *         await new Promise(r => setInterval(() => {
    *           logger.log(`${i} sheep${i > 1 ? 's' : ''}`)
@@ -18,7 +18,7 @@ module.exports = {
    *         }, 1000)
    *       }
    *     },
-   *     () => { app.get('logger').log('Good Night!'); }
+   *     () => { toweran.app.get('logger').log('Good Night!'); }
    *   ],
    *
    * }
