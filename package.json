@@ -36,7 +36,7 @@
     "dotenv": "^8.2.0",
     "escape-string-regexp": "^2.0.0",
     "express": "^4.17.1",
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^9.0.0",
     "glob": "^7.1.4",
     "rimraf": "^3.0.0",
     "simple-annotation": "^0.1.6",
